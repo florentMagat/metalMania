@@ -1,0 +1,15 @@
+.album{
+    padding: 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.album-details{
+    width: 15vw;
+    height: 15vw;
+    border: 0.1rem solid darkgrey;
+    padding: 1rem;
+    border-radius: 30px;
+}
