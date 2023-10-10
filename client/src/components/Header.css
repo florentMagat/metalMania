@@ -1,6 +1,36 @@
+.header{
+    display: flex;
+}
+
 .header-img{
     width: 22vw;
-    height: auto
+    height: auto;
+}
+
+.header-categories{
+    width: 58vw;
+}
+
+.header-connection{
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.header-connection-inputs{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4vh;
+    gap: 5px;
+    
+}
+
+.header-connection-buttons{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4vh;
+    gap: 5px;
 }
 
 .header-bottom{

@@ -15,6 +15,7 @@ const App = () => {
           <Route exact path = "/albums/:id" element = { <AlbumDetails/> } />
           <Route exact path = "/albums/add" element = { <AddAlbum/> } />
           <Route exact path = "/albums/:id/update" element = { <UpdatePage/> } />
+          <Route exact path ="*" />
         </Routes>
       </BrowserRouter>
     </AlbumsProvider>

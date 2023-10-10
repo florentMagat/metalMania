@@ -5,7 +5,7 @@ import AlbumsList from '../components/AlbumsList';
 const Home = () => {
   return (
     <div>
-        <Header />
+        <Header />      
         <AlbumsList />
     </div>
   )

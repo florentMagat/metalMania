@@ -40,7 +40,7 @@ app.get("/api/albums/:id", async (req, res) => {
   }
 });
 
-app.post("/api/albums", async (req, res) => {
+app.post("/api/albums/add", async (req, res) => {
   console.log(req.body);
 
   try {
