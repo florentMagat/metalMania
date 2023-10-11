@@ -1,19 +1,17 @@
 import React from 'react';
 import "./Album.css";
+import AlbumDetails from '../routes/AlbumDetails';
 
 export default function Album( props ) {
+
   return (
     <div>
-      <div className="album-details">
-        {/* <h2>{props.title}</h2>
-        <h3>{props.band}</h3> */}
-        {/* <p>{props.year}</p>
-        <p>{props.genre}</p>
-        <p>{props.description}</p> */}
+      <div className="album-details" onClick={ () => <AlbumDetails {...props}/>}>
         <div>{props.picture}</div>
       </div>
       <h2>"{props.title}"</h2>
       <h3>{props.band}</h3>
+
     </div>
   )
 }

@@ -7,6 +7,17 @@
     justify-content: space-around;
     text-align: center;
     background: url("../assets/background.jpg");
+    margin-top: 3vh;
+}
+
+.album-presentation{
+    display: flex;
+    flex-direction: column;
+}
+
+.album-buttons{
+    display: flex;
+    justify-content: space-around;
 }
 
 .album-details{

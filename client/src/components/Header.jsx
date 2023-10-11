@@ -1,12 +1,16 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import home from '../assets/home.jpg';
 
 export default function Header() {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <div className='header'>
-        <img src={home} class="header-img" alt="logo-MetalMania"/>
+        <img src={home} class="header-img" alt="logo-MetalMania" onClick={()=>navigate(`/`)}/>
 
         <div className='header-categories'>
 

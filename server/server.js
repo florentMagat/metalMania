@@ -95,7 +95,7 @@ app.put("/api/albums/:id", async (req, res) => {
 
 app.delete("/api/albums/:id", async (req, res) => {
   try {
-    const results = await db.query("DELETE FROM restaurants where id = $1", [
+    const results = await db.query("DELETE FROM albums where id = $1", [
       req.params.id,
     ]);  
     res.status(204).json({
