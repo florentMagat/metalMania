@@ -14,7 +14,7 @@ export default function AlbumsList(props) {
     useEffect(() => {       
         async function fetchData() {
             try {
-                const res = await AlbumFinder.get("/")
+                const res = await AlbumFinder.get(`/`)
                 setAlbums(res.data.data.album)         
             } catch (err) {}
         } fetchData()

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import '../components/Album.css';
+import AlbumFinder from '../Apis/AlbumFinder';
 
 const UpdatePage = (props) => {
 
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [band, setBand] = useState("");
   const [year, setYear] = useState("");
@@ -12,7 +16,33 @@ const UpdatePage = (props) => {
   const [picture, setPicture] = useState("");
   const [description, setDescription] = useState("");
 
-  const { id } = useParams();
+  useEffect(()=> {
+    const fetchData = async() => {
+      const res = await AlbumFinder.get(`/${id}`)
+      const resp = res.data.data.album
+      setTitle(resp.title)
+      setBand(resp.band)
+      setYear(resp.year)
+      setGenre(resp.genre)
+      setPicture(resp.picture)
+      setDescription(resp.description)
+    }
+    fetchData()
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await AlbumFinder.put(`/${id}`, {
+      title,
+      band,
+      year,
+      genre,
+      picture,
+      description
+    })
+    navigate('/');
+    alert("Mise à jour effectuée !")
+  }
 
   return (
     <div>
@@ -47,7 +77,7 @@ const UpdatePage = (props) => {
                     <div>
                         <textarea type = "text-area" value={description} onChange={e => setDescription(e.target.value)} placeholder={description} />
                     </div>
-                    <button type="submit">Valider</button>
+                    <button onClick={handleSubmit} type="submit">Modifier</button>
                 </div>
             </form>
         </div>

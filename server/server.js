@@ -2,12 +2,27 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
-
-const morgan = require("morgan");
 const app = express();
+
+const bcrypt = require("bcrypt");
+const morgan = require("morgan");
+const multer = require('multer');
+
+const storage = multer.diskStorage ({
+  destination: function(req, file, cb) {
+  return cb(null, "./images")
+  },
+  filename: function (req, file, cb) {
+  return cb(null, file.originalname)
+  }
+})
+
+const upload = multer ({ storage })
 
 app.use(cors());
 app.use(express.json());
+app.use('/images', express.static('images'));
+app.use(express.urlencoded({extended: false}));
 
 app.get("/api/albums", async (req, res) => {
   try {
@@ -105,6 +120,84 @@ app.delete("/api/albums/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+app.post('/upload', upload.single('file'), (req,res) => {
+  req.body
+  req.file
+});
+
+app.post("/register", async (req, res) => {
+  console.log("req.body", req.body);
+
+  try {
+    // const hashedPassword = await bcrypt.hash(req.body.password)
+
+    const results = await db.query(
+      "INSERT INTO users (lastname, firstname, email, password, role_id) values ($1, $2, $3, $4, $5) returning *",
+      [
+        req.body.lastname,
+        req.body.firstname,
+        req.body.email,
+        req.body.password,
+        req.body.role_id
+      ]
+    );
+    console.log("results", results);
+    res.status(201).json({
+      statuts: "succes",
+      data: {
+        user: results.rows[0],
+      },
+    })
+    res.redirect("/")
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/login", async (req,res)=>{
+
+  try{
+
+    const user = await db.query(
+    "SELECT * FROM users WHERE email = $1 AND password = $2",
+    [
+      req.body.email,
+      req.body.password
+    ] 
+    ); 
+    if(user){
+      res.status(200).json({
+        status: "success",
+        data: {
+          user: user.rows[0],
+        },
+      });
+    }
+} catch (err) {
+    console.log(err);
+} 
+});
+
+app.post("/logout", async (req,res)=>{
+
+  try{
+    res.status(200).json({
+      msg: "logout",
+      code: 200
+  })
+} catch (err) {
+  console.log(err);
+}
+});
+
+// app.all('*', async(req,res) =>{
+//   try {
+
+//   } catch (e) {
+//     throw new Error (e)
+//   }
+// });
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

@@ -1,0 +1,19 @@
+.register{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25vh;
+}
+
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 2vh;
+    width: 50vw;
+    height: 50vh;
+    border: 0.1rem solid darkgrey;
+    padding: 1rem;
+    border-radius: 30px;
+    margin-top: 18vh;
+}

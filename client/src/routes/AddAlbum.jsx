@@ -1,10 +1,14 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AlbumFinder from '../Apis/AlbumFinder';
 import Header from '../components/Header'
 import "./AddAlbum.css";
 import { Albums } from '../Context/Albums';
+import axios from 'axios';
 
 export default function AddAlbum() {
+
+  const navigate = useNavigate();
 
   const { addAlbums } = useContext(Albums)
   const [title, setTitle] = useState("");
@@ -13,6 +17,8 @@ export default function AddAlbum() {
   const [genre, setGenre] = useState("");
   const [picture, setPicture] = useState("");
   const [description, setDescription] = useState("");
+
+  const [file, setFile] = useState()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,10 +32,20 @@ export default function AddAlbum() {
             description,
         })
         addAlbums(res.data.data.album);
-        console.log(res);
+        navigate('/');
     } catch (err) {
-
+        console.log(err)
     }
+  }
+
+  const upload = () => {
+    const formData = new FormData()
+    formData.append('file', file)
+    axios.post('http://localhost:3001/upload', formData)
+        .then(res => {
+        })  
+        .catch(er => console.log(er))
+        console.log(file)
   }
 
   return (
@@ -58,8 +74,13 @@ export default function AddAlbum() {
                             <option>Autres</option>
                         </select>
                     </div>
-                    <div>
+                    {/* <div>
                         <input type = "image" value={picture} onChange={e => setPicture(e.target.value)} alt="Image de présentation de l'album" placeholder="image" />
+                    </div> */}
+                    <div>
+                        <input type="file" onChange={(e)=> setFile(e.target.files[0])}/>
+                        <p>{picture}</p>
+                        <button type="button" onClick={upload}>Upload</button>
                     </div>
                     <div>
                         <textarea type = "text-area" value={description} onChange={e => setDescription(e.target.value)} placeholder="description" />

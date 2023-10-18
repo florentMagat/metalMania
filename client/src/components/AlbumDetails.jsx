@@ -5,10 +5,9 @@ export default function AlbumDetails( props ) {
 
   return (
     <>
-        <div className=''>
-
+        <div className='album-details-container'>
+          
         </div>
-
     </>
   )
 }

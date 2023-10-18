@@ -1,10 +1,12 @@
 .header{
     display: flex;
+    justify-content: space-around;
 }
 
 .header-img{
     width: 22vw;
     height: auto;
+    margin-left:0;
 }
 
 .header-categories{
@@ -14,8 +16,10 @@
 .header-connection{
     width: 20vw;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 5px;
+    gap: 2vh;
+    width: 10vw;
 }
 
 .header-connection-inputs{
@@ -37,4 +41,14 @@
     width: 100vw;
     background-color:darkgrey;
     height: 1px;
+}
+
+.add-button{
+
+}
+
+.header-categories{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
 }
