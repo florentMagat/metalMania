@@ -37,42 +37,49 @@ export default function Register() {
     <>
       <div className='register'>
         <form onSubmit={handleSubmit}>
-          <div class="row">
-            <h1 class="mb-3 h3">Inscription</h1>
-            <div class="col-md-12 mb-4">
-              <div class="form-outline">
-                <input type="text" name="Firstname" id="form3Example2" class="form-control" value={firstname} onChange={e=>setFirstname(e.target.value)} />
-                <label class="form-label" for="form3Example2">First Name</label>
+          <div className="row">
+            <h1 className="mb-5 h3" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>Inscription</h1>
+            <div className="col-md-12 mb-3">
+              <div className="form-outline">
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                  <label className="form-label" for="form3Example2">First Name</label>
+                </div>
+                <input style={{textAlign: "center"}} type="text" name="Firstname" id="form3Example2" className="form-control" value={firstname} onChange={e=>setFirstname(e.target.value)} /> 
               </div>
             </div>
           </div>
 
-          <div class="form-outline">
-                <input type="text" name="Lastname" id="form3Example5" class="form-control" alue={lastname} onChange={e=>setLastname(e.target.value)}  />
-                <label class="form-label" for="form3Example5">Last Name</label>
-              </div>
-
-          <div class="form-outline mb-4">
-            <input type="email" name="email" id="form3Example3" class="form-control" alue={email} onChange={e=>setEmail(e.target.value)}  />
-            <label class="form-label" for="form3Example3">Email address</label>
+          <div className="form-outline mb-3">
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <label className="form-label" for="form3Example5">Last Name</label>
+            </div>
+            <input style={{textAlign: "center"}} type="text" name="Lastname" id="form3Example5" className="form-control" alue={lastname} onChange={e=>setLastname(e.target.value)}  /> 
           </div>
 
-          <div class="form-outline mb-4">
-            <input type="password" name="password" id="form3Example4" class="form-control" alue={password} onChange={e=>setPassword(e.target.value)}  />
-            <label class="form-label" for="form3Example4">Password</label>
+          <div className="form-outline mb-3">
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <label className="form-label" for="form3Example3">Email address</label>
+            </div>
+            <input style={{textAlign: "center"}} type="email" name="email" id="form3Example3" className="form-control" alue={email} onChange={e=>setEmail(e.target.value)}  />  
+          </div>
+
+          <div className="form-outline mb-3">
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <label className="form-label" for="form3Example4">Password</label>
+            </div>
+            <input style={{textAlign: "center"}} type="password" name="password" id="form3Example4" className="form-control" alue={password} onChange={e=>setPassword(e.target.value)}  />
           </div>
 
           <div className='register-buttons'>
-            <button type="submit" class="btn btn-primary btn-block mb-4">
+            <button type="submit" className="btn btn-primary btn-block mb-4">
               S'inscrire
             </button>
-
-            <button onClick={handleRegister} class="btn btn-primary btn-block mb-4">
+            <button onClick={handleRegister} className="btn btn-primary btn-block mb-4">
               Retour
             </button>
           </div>
 
-          <div class="text-center">           
+          <div className="text-center">           
           </div>
         </form>
       </div>

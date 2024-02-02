@@ -45,10 +45,14 @@ const UpdatePage = (props) => {
     toast.success('Mise à jour effectuée !');
   }
 
+  const handleClick = () => {
+    navigate("/")
+  }
+
   return (
     <div>
       <>
-        <Header />
+        {/* <Header /> */}
         <div className='add-album'>
             <form className='form'>
                 <div>
@@ -80,6 +84,7 @@ const UpdatePage = (props) => {
                     </div>
                     <button onClick={handleSubmit} type="submit">Modifier</button>
                 </div>
+                <button onClick={handleClick} className="btn btn-primary" >Retour à l'accueil</button>
             </form>
         </div>
     </>

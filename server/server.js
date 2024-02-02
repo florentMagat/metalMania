@@ -114,7 +114,7 @@ app.delete("/api/albums/:id", async (req, res) => {
       req.params.id,
     ]);  
     res.status(204).json({
-    status: "success",
+      status: "success",
   });
   } catch (err) {
     console.log(err);
@@ -127,11 +127,8 @@ app.post('/upload', upload.single('file'), (req,res) => {
 });
 
 app.post("/register", async (req, res) => {
-  console.log("req.body", req.body);
-
   try {
     // const hashedPassword = await bcrypt.hash(req.body.password)
-
     const results = await db.query(
       "INSERT INTO users (lastname, firstname, email, password, role_id) values ($1, $2, $3, $4, $5) returning *",
       [
@@ -155,6 +152,22 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.get("/users", async (req, res) => {
+  try{
+    const users = await db.query(
+    "SELECT * FROM users"); 
+    console.log("data", users);
+    res.status(200).json({
+      status: "success",
+      data: {
+        users: users.rows,
+      },
+    });
+  } catch (err) {
+      console.log(err); 
+  } 
+});
+
 app.post("/login", async (req,res)=>{
 
   try{
@@ -167,10 +180,12 @@ app.post("/login", async (req,res)=>{
     ] 
     ); 
     if(user){
+      console.log("data", user.rows[0])
       res.status(200).json({
         status: "success",
         data: {
           user: user.rows[0],
+          role : user.rows[0].role_id,
         },
       });
     }

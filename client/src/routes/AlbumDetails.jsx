@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import './AlbumDetails.css';
 import FindOneAlbum from '../Apis/FindOneAlbum';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AlbumDetails = () => {
 
   const [album, setAlbum] = useState("");
+  const navigate = useNavigate();
   const id = useParams();
 
   useEffect(() => {       
@@ -17,8 +19,11 @@ const AlbumDetails = () => {
     } fetchData()
     }); 
 
+  const handleClick = () => {
+    navigate("/")
+  }
+
   const picture = `http://localhost:3001/images/${album.title}.jpg`;
-  console.log(album)
 
   return (
     <div className='album-details-container'>
@@ -31,6 +36,7 @@ const AlbumDetails = () => {
         <h2>{album.band} / {album.genre}</h2>
         </div>
         <p className='album-details-p'>{album.description}</p>
+        <button onClick={handleClick} className="btn btn-primary" >Retour à l'accueil</button>
       </div>
     </div>
   )

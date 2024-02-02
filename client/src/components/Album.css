@@ -19,7 +19,8 @@
 
 .album-buttons{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 2vw;
 }
 
 .album-details{
@@ -32,7 +33,18 @@
     margin-right: 2vw;
 }
 
+.album-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+}
+
 .image{
     width: 95%;
     height: auto;
+}
+
+.title{
+    font-style: italic;
 }

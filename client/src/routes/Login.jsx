@@ -32,8 +32,6 @@ export default function Login() {
     const ProceedLogin = (e) => {
       e.preventDefault();
       let informations = { email, password }
-      console.log(informations);
-      console.log("email", email)
   
       fetch("http://localhost:3001/login", {
         method: "POST",
@@ -41,11 +39,14 @@ export default function Login() {
         body:JSON.stringify(informations)
 
       }).then((res)=>{
-        toast.success('Login réussi');
-        setIsLogged(true);
-        sessionStorage.setItem('email', email);
-        navigate("/");
-      }).catch((err)=>{
+        res.json().then((data) => {
+          toast.success('Login réussi');
+          setIsLogged(true);
+          console.log("data.role", data.data.role)
+          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('role', data.data.role);
+          navigate("/");
+      })}).catch((err)=>{
         toast.error('erreur')
       });
     }
@@ -62,19 +63,26 @@ export default function Login() {
       <div className="login">   
         <form onSubmit={ProceedLogin}>
           <img src={home} className="login-img" alt="logo-MetalMania" onClick={()=>navigate(`/`)}/>
-          <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example3">Email</label>
-            <input type="email" value={email} onChange={e=>emailupdate(e.target.value)} id="form3Example3" class="form-control" /> 
+          <div className="form-outline mb-4">
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <label className="form-label" for="form3Example3">Email</label>
+            </div>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <input type="email" style={{width: '25vw', textAlign: "center"}} value={email} onChange={e=>emailupdate(e.target.value)} id="form3Example3" className="form-control" /> 
+            </div>
           </div>
 
-          <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example4">Password</label>
-            <input type="password" value={password} onChange={e=>passwordupdate(e.target.value)} id="form3Example4" class="form-control" />
-            
+          <div className="form-outline mb-4">
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <label className="form-label" for="form3Example4">Password</label>
+            </div>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <input type="password" style={{width: '25vw', textAlign: "center"}} value={password} onChange={e=>passwordupdate(e.target.value)} id="form3Example4" className="form-control" />  
+            </div>
           </div>
 
           <div className="login-buttons">
-            <button type="submit" class="btn btn-primary">Se connecter</button>
+            <button type="submit" className="btn btn-primary">Se connecter</button>
             <button onClick={handleRegister} className="btn btn-primary" >S'inscrire</button>
           </div>
 

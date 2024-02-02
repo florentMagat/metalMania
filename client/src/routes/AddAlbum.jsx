@@ -52,9 +52,13 @@ export default function AddAlbum() {
         console.log(file)
   }
 
+  const handleClick = () => {
+    navigate("/")
+  }
+
   return (
     <>
-        <Header />
+        {/* <Header /> */}
         <div className='add-album'>
             <form className='form'>
                 <div>
@@ -91,7 +95,8 @@ export default function AddAlbum() {
                     </div>
                     <button onClick={handleSubmit} type="submit">Valider</button>
                 </div>
-            </form>
+                <button onClick={handleClick} className="btn btn-primary" >Retour à l'accueil</button>
+            </form>    
         </div>
     </>
   )

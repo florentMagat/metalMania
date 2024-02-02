@@ -7,7 +7,7 @@
 
 .login-img{
     width: 50vw;
-    margin-bottom: 10vh;
+    margin-bottom: 5vh;
 }
 
 .login-buttons{
@@ -15,4 +15,5 @@
     justify-content: center;
     align-items: center;
     gap: 2vw;
+    margin-top: 5vh;
 }

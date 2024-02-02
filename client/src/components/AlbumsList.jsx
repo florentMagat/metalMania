@@ -34,8 +34,9 @@ export default function AlbumsList() {
     const handleUpdate = (id) => {
         navigate(`/albums/${id}/update`)
     }
+    let role = sessionStorage.getItem('role');
 
-    if (email) {
+    if (email && role === "1") {
     return (
         <div className="album">
             {albums && albums.map(album =>{
