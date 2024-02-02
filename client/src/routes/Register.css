@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20vh;
+    margin-top: 25vh;
 }
 
 .form{
@@ -16,11 +16,4 @@
     padding: 1rem;
     border-radius: 30px;
     margin-top: 18vh;
-}
-
-.register-buttons{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2vw;
 }

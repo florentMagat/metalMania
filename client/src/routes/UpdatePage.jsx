@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import '../components/Album.css';
 import AlbumFinder from '../Apis/AlbumFinder';
-import { toast } from 'react-toastify';
 
 const UpdatePage = (props) => {
 
@@ -42,7 +41,7 @@ const UpdatePage = (props) => {
       description
     })
     navigate('/');
-    toast.success('Mise à jour effectuée !');
+    alert("Mise à jour effectuée !")
   }
 
   return (

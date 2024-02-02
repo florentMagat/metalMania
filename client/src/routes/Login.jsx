@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import Header from '../components/Header';
 import { toast } from 'react-toastify';
-import "./Login.css";
+import "./Register.css";
 import { useNavigate } from 'react-router-dom';
-import home from '../assets/home.jpg';
 
 export default function Login() {
 
@@ -33,7 +33,6 @@ export default function Login() {
       e.preventDefault();
       let informations = { email, password }
       console.log(informations);
-      console.log("email", email)
   
       fetch("http://localhost:3001/login", {
         method: "POST",
@@ -43,43 +42,34 @@ export default function Login() {
       }).then((res)=>{
         toast.success('Login réussi');
         setIsLogged(true);
-        sessionStorage.setItem('email', email);
-        navigate("/");
+        navigate("/login");
       }).catch((err)=>{
         toast.error('erreur')
       });
     }
 
-    const handleRegister = () => {
-      navigate('/register')
-    }
+    console.log(isLogged)
 
-  if (isLogged) {
-      navigate('/')
-  } else {
   return (
     <>
-      <div className="login">   
+      <Header />
+      <div className='register'>
         <form onSubmit={ProceedLogin}>
-          <img src={home} className="login-img" alt="logo-MetalMania" onClick={()=>navigate(`/`)}/>
+
           <div class="form-outline mb-4">
+            <input type="email" value={email} onChange={e=>emailupdate(e.target.value)} id="form3Example3" class="form-control" />
             <label class="form-label" for="form3Example3">Email</label>
-            <input type="email" value={email} onChange={e=>emailupdate(e.target.value)} id="form3Example3" class="form-control" /> 
           </div>
 
           <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example4">Password</label>
             <input type="password" value={password} onChange={e=>passwordupdate(e.target.value)} id="form3Example4" class="form-control" />
-            
+            <label class="form-label" for="form3Example4">Password</label>
           </div>
 
-          <div className="login-buttons">
-            <button type="submit" class="btn btn-primary">Se connecter</button>
-            <button onClick={handleRegister} className="btn btn-primary" >S'inscrire</button>
-          </div>
+          <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
 
         </form>
       </div>
     </>
   )
-}}
+}
