@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import "./AddAlbum.css";
 import { Albums } from '../Context/Albums';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function AddAlbum() {
 
@@ -31,8 +32,11 @@ export default function AddAlbum() {
             picture,
             description,
         })
-        addAlbums(res.data.data.album);
+        console.log("addalbum", res.data.data.album)
+        
+        toast.success('Nouvel album ajouté avec succès !');
         navigate('/');
+        addAlbums(res.data.data.album);
     } catch (err) {
         console.log(err)
     }

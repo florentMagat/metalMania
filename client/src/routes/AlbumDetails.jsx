@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './AlbumDetails.css';
 import FindOneAlbum from '../Apis/FindOneAlbum';
 import { useParams } from 'react-router-dom';
@@ -15,7 +15,7 @@ const AlbumDetails = () => {
             setAlbum(res.data.data.album)         
         } catch (err) {}
     } fetchData()
-    } ,[]); 
+    }); 
 
   const picture = `http://localhost:3001/images/${album.title}.jpg`;
   console.log(album)

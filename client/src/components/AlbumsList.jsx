@@ -1,15 +1,16 @@
-import { React, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Album from './Album';
 import AlbumFinder from "../Apis/AlbumFinder";
 import { useContext } from 'react';
 import { Albums } from '../Context/Albums';
 import "./Album.css";
+import { toast } from 'react-toastify';
 
-export default function AlbumsList(props) {
+export default function AlbumsList() {
     const navigate = useNavigate();
-
     const { albums, setAlbums } = useContext(Albums);
+    let email=sessionStorage.getItem('email');
     
     useEffect(() => {       
         async function fetchData() {
@@ -26,6 +27,7 @@ export default function AlbumsList(props) {
             setAlbums(albums.filter(album => {
                 return album.id !== id
             }))
+            toast.success('Album supprimé !');
         } catch (err) {}
     };
 
@@ -33,6 +35,7 @@ export default function AlbumsList(props) {
         navigate(`/albums/${id}/update`)
     }
 
+    if (email) {
     return (
         <div className="album">
             {albums && albums.map(album =>{
@@ -48,5 +51,17 @@ export default function AlbumsList(props) {
             })        
             }
         </div>
-    )
+    )} else {
+        return (
+            <div className="album">
+                {albums && albums.map(album =>{
+                    return(
+                        <div className='album-presentation'>
+                            <Album { ...album }  />
+                        </div>
+                    )
+                })        
+                }
+            </div>
+    )}
 };
