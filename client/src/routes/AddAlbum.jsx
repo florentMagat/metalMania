@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlbumFinder from '../Apis/AlbumFinder';
-import Header from '../components/Header'
 import "./AddAlbum.css";
 import { Albums } from '../Context/Albums';
 import axios from 'axios';
@@ -58,7 +57,6 @@ export default function AddAlbum() {
 
   return (
     <>
-        {/* <Header /> */}
         <div className='add-album'>
             <form className='form'>
                 <div>
@@ -95,8 +93,11 @@ export default function AddAlbum() {
                     </div>
                     <button onClick={handleSubmit} type="submit">Valider</button>
                 </div>
-                <button onClick={handleClick} className="btn btn-primary" >Retour à l'accueil</button>
+                
             </form>    
+        </div>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", paddingTop: "5vh"}}>
+            <button onClick={handleClick} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Retour à l'accueil</button>
         </div>
     </>
   )

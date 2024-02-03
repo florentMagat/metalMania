@@ -6,7 +6,8 @@ import Home from './routes/Home';
 import Dashboard from './routes/Dashboard';
 import Login from './routes/Login';
 import AddAlbum from './routes/AddAlbum';
-import Register from './routes/Register'
+import Register from './routes/Register';
+import Page404 from './routes/Page404';
 import { AlbumsProvider } from './Context/Albums';
 import { ToastContainer } from 'react-toastify';
 
@@ -23,7 +24,7 @@ const App = () => {
           <Route exact path = "/albums/add" element = { <AddAlbum/> } />
           <Route exact path = "/register" element = { <Register/> } />
           <Route exact path = "/albums/:id/update" element = { <UpdatePage/> } />
-          <Route exact path ="*" />
+          <Route exact path ="*" element = { <Page404/> }/>
         </Routes>
       </BrowserRouter> 
     </AlbumsProvider>

@@ -1,6 +1,12 @@
 .header{
     display: flex;
-    justify-content: space-around;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100vw;
 }
 
 .header-img{
@@ -10,7 +16,8 @@
 }
 
 .header-categories{
-    width: 58vw;
+    display: flex;
+    gap: 2vw;
 }
 
 .header-connection{

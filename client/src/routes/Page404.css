@@ -1,0 +1,10 @@
+.main{
+    background: url("../assets/OIG (2).jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

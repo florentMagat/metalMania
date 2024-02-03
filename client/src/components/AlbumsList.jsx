@@ -44,8 +44,8 @@ export default function AlbumsList() {
                     <div className='album-presentation'>
                         <Album { ...album }  />
                         <div className='album-buttons'>
-                            <button onClick={()=> handleUpdate(album.id)} className='btn btn-warning'>Modifier</button>
-                            <button onClick={()=> handleDelete(album.id)} className='btn btn-danger'>Supprimer</button>
+                            <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
+                            <button onClick={()=> handleDelete(album.id)} className="btn" style={{backgroundColor: "#E71619", color: "black"}}>Supprimer</button>
                         </div>
                     </div>
                 )

@@ -4,14 +4,45 @@
     display: flex;
     background: url("../assets/OIG (3).jpg");
     background-repeat: no-repeat;
-
     background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard table {
+    border-collapse: collapse;
 }
 
 .dashboard{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    width: 80vw;
+    background-color: rgb(0, 0, 0, 0.6);
+    padding: 1rem;
+    border-radius: 20px;
     align-items: center;
-    width: 100vw;
+}
+
+.users-title{
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 5vh;
+}
+
+.users-table{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.users-table-thead{
+    font-size: 1.1rem;
+}
+
+.dashboard table td, .dashboard table th {
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
 }

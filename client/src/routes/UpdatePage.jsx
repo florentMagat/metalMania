@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import '../components/Album.css';
@@ -52,7 +51,6 @@ const UpdatePage = (props) => {
   return (
     <div>
       <>
-        {/* <Header /> */}
         <div className='add-album'>
             <form className='form'>
                 <div>
@@ -84,11 +82,14 @@ const UpdatePage = (props) => {
                     </div>
                     <button onClick={handleSubmit} type="submit">Modifier</button>
                 </div>
-                <button onClick={handleClick} className="btn btn-primary" >Retour à l'accueil</button>
             </form>
+        </div>
+        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", paddingTop: "5vh"}}>
+            <button onClick={handleClick} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Retour à l'accueil</button>
         </div>
     </>
     </div>
+    
   )
 }
 

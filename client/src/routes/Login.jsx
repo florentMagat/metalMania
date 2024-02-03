@@ -40,7 +40,7 @@ export default function Login() {
 
       }).then((res)=>{
         res.json().then((data) => {
-          toast.success('Login réussi');
+          // toast.success('Login réussi');
           setIsLogged(true);
           console.log("data.role", data.data.role)
           sessionStorage.setItem('email', email);
@@ -82,8 +82,8 @@ export default function Login() {
           </div>
 
           <div className="login-buttons">
-            <button type="submit" className="btn btn-primary">Se connecter</button>
-            <button onClick={handleRegister} className="btn btn-primary" >S'inscrire</button>
+            <button type="submit" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Se connecter</button>
+            <button onClick={handleRegister} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >S'inscrire</button>
           </div>
 
         </form>

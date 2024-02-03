@@ -29,34 +29,40 @@ const Dashboard = () => {
     };  
   });
 
-  console.log("users", users);
+  const handleClick = () => {
+    navigate("/")
+  }
 
   return (
     <div className='background'>
         <div className='dashboard'>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Rôle</th>
+            <h1 className='users-title'>Gestion des utilisateurs</h1>
+            <table className='users-table'>
+              <tbody>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Email</th>
+                  <th>Rôle</th>
+                  <th>Modifier</th>
+                  <th>Supprimer</th>
+                </tr>
+                {users.map((user) => (
+                    <tr key={user.id}>
+                        <td>{user.id}</td>
+                        <td>{user.lastname}</td>
+                        <td>{user.firstname}</td>
+                        <td>{user.email}</td>
+                        <td>{user.role_id === 1 ? "administrateur" : "utilisateur"}</td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.lastname}</td>
-                            <td>{user.firstname}</td>
-                            <td>{user.email}</td>
-                            <td>{user.role_id === 1 ? "administrateur" : "utilisateur"}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+                ))}
+              </tbody>
+            </table>   
         </div>
+      <button onClick={handleClick} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white", marginTop: "5vh"}} >Retour à l'accueil</button>
     </div>
   )
 }

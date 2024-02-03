@@ -36,7 +36,7 @@ const AlbumDetails = () => {
         <h2>{album.band} / {album.genre}</h2>
         </div>
         <p className='album-details-p'>{album.description}</p>
-        <button onClick={handleClick} className="btn btn-primary" >Retour à l'accueil</button>
+        <button onClick={handleClick} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Retour à l'accueil</button>
       </div>
     </div>
   )
