@@ -7,7 +7,7 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     text-align: center;
-    background: url("../assets/background.jpg");
+    background: url("../assets/OIG2.jpg");
 }
 
 .album-presentation{
@@ -47,4 +47,24 @@
 
 .title{
     font-style: italic;
+}
+
+.form-title{
+    padding-bottom: 5vh;
+}
+
+.form-div{
+    padding-bottom: 1vh;
+}
+
+.form-div textarea {
+    width: 75vw;
+    height: 25vh;
+    padding: 2vh;
+}
+
+input{
+    padding: 1vh;
+    border-radius: 10px;
+    text-align: center;
 }

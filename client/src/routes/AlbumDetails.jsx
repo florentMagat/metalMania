@@ -17,18 +17,20 @@ const AlbumDetails = () => {
             setAlbum(res.data.data.album)         
         } catch (err) {}
     } fetchData()
-    }); 
+    }, [id.id]); 
 
   const handleClick = () => {
     navigate("/")
   }
 
-  const picture = `http://localhost:3001/images/${album.title}.jpg`;
+  console.log("album, album", album)
+
+  const picture = `http://localhost:3001/images/${album.picture}`;
 
   return (
     <div className='album-details-container'>
       <div className='album-details-left'>
-        <img src={picture} alt="picture_cover" />
+        {album.picture && <img src={picture} alt="picture_cover" className='picture' />}  
       </div>
       <div className='album-details-right'>
         <div>

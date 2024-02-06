@@ -13,8 +13,10 @@
 .album-details-left{
     display: flex;
     align-items: center;
+    flex-direction: row;
+    justify-content: center;
     height: auto;
-    width: auto;
+    padding-left: 5vw;
 }
 
 .album-details-right{
@@ -38,4 +40,12 @@
     font-size: 1.5rem;
     font-style: italic;
     margin-bottom: 5vh;
+}
+
+.picture{
+    width: auto;
+    height: 50vh;
+    border: 0.1rem solid darkgrey;
+    border-radius: 50%;
+    margin-right: 2vw;
 }

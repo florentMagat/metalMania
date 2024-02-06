@@ -7,7 +7,9 @@ export default function Album( props ) {
   const handleDetails = (id) => {
     navigate(`/albums/${id}`)
   }
-  const picture = `http://localhost:3001/images/${props.title}.jpg`
+  const picture = `http://localhost:3001/images/${props.picture}`;
+
+  console.log("props", props)
 
   return (
     <>

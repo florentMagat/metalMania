@@ -38,7 +38,7 @@ export default function Register() {
       <div className='register'>
         <form onSubmit={handleSubmit}>
           <div className="row">
-            <h1 className="mb-5 h3" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>Inscription</h1>
+            <h1 className="mb-4 h3" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>Inscription</h1>
             <div className="col-md-12 mb-3">
               <div className="form-outline">
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
@@ -71,10 +71,10 @@ export default function Register() {
           </div>
 
           <div className='register-buttons'>
-            <button type="submit" className="btn btn-primary btn-block mb-4">
+            <button type="submit" className="btn btn-primary btn-block" style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px"}}>
               S'inscrire
             </button>
-            <button onClick={handleRegister} className="btn btn-primary btn-block mb-4">
+            <button onClick={handleRegister} className="btn btn-block" style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px"}}>
               Retour
             </button>
           </div>

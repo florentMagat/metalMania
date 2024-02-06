@@ -9,11 +9,9 @@ const morgan = require("morgan");
 const multer = require('multer');
 
 const storage = multer.diskStorage ({
-  destination: function(req, file, cb) {
-  return cb(null, "./images")
-  },
+  destination: "./images",
   filename: function (req, file, cb) {
-  return cb(null, file.originalname)
+    cb(null, file.originalname)
   }
 })
 
@@ -122,8 +120,33 @@ app.delete("/api/albums/:id", async (req, res) => {
 });
 
 app.post('/upload', upload.single('file'), (req,res) => {
-  req.body
-  req.file
+  try{
+    req.body
+    req.file
+    res.status(200).json({
+      status: "success",
+      data: {
+        file: req.file,
+      },
+    });
+  } catch (err) {
+      console.log(err); 
+  }
+});
+
+app.put('/updateImage', upload.single('file'), (req,res) => {
+  try{
+    req.body
+    req.file
+    res.status(200).json({
+      status: "success",
+      data: {
+        file: req.file,
+      },
+    });
+  } catch (err) {
+      console.log(err); 
+  }
 });
 
 app.post("/register", async (req, res) => {
