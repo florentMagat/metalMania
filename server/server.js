@@ -24,6 +24,8 @@ app.use(express.json());
 app.use('/images', express.static('images'));
 app.use(express.urlencoded({extended: false}));
 
+// Consultation de la liste des albums
+
 app.get("/api/albums", async (req, res) => {
   try {
     const results = await db.query("select * from albums;");
@@ -38,6 +40,8 @@ app.get("/api/albums", async (req, res) => {
     console.log(err);
   }
 });
+
+// Consultation d'un album
 
 app.get("/api/albums/:id", async (req, res) => {
   try {
@@ -56,7 +60,7 @@ app.get("/api/albums/:id", async (req, res) => {
 });
 
 
-
+//REVIEWS
 
 
 app.get("/api/reviews/:id", async (req, res) => {
@@ -94,7 +98,7 @@ app.post("/api/reviews/:id", async (req, res) => {
 
 
 
-
+// Ajout d'un album
 
 app.post("/api/albums/add", async (req, res) => {
   console.log(req.body);
@@ -123,6 +127,8 @@ app.post("/api/albums/add", async (req, res) => {
   }
 });
 
+// Modification d'un album
+
 app.put("/api/albums/:id", async (req, res) => {
   try {
     const results = await db.query(
@@ -149,6 +155,8 @@ app.put("/api/albums/:id", async (req, res) => {
   }
 });
 
+// Suppression d'un album
+
 app.delete("/api/albums/:id", async (req, res) => {
   try {
     const results = await db.query("DELETE FROM albums where id = $1", [
@@ -161,6 +169,8 @@ app.delete("/api/albums/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+// Ajout d'une image
 
 app.post('/upload', upload.single('file'), (req,res) => {
   try{
@@ -177,11 +187,29 @@ app.post('/upload', upload.single('file'), (req,res) => {
   }
 });
 
+// Modification d'une image
+
+app.put('/updateImage', upload.single('file'), (req,res) => {
+  try{
+    req.body
+    req.file
+    res.status(200).json({
+      status: "success",
+      data: {
+        file: req.file,
+      },
+    });
+  } catch (err) {
+      console.log(err); 
+  }
+});
+
+// Suppression d'une image
+
 app.delete('/deleteImage', (req, res) => {
   const picture = req.body.picture;
   // Chemin du fichier à supprimer
   const filePath = path.join(__dirname, '/images/', picture);
-
   // Vérifie si le fichier existe
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {
@@ -200,20 +228,7 @@ app.delete('/deleteImage', (req, res) => {
   });
 });
 
-app.put('/updateImage', upload.single('file'), (req,res) => {
-  try{
-    req.body
-    req.file
-    res.status(200).json({
-      status: "success",
-      data: {
-        file: req.file,
-      },
-    });
-  } catch (err) {
-      console.log(err); 
-  }
-});
+// Enregistrement d'un utilisateur
 
 app.post("/register", async (req, res) => {
   try {
@@ -241,6 +256,8 @@ app.post("/register", async (req, res) => {
   }
 });
 
+// Consultation de la liste des utilisateurs
+
 app.get("/users", async (req, res) => {
   try{
     const users = await db.query(
@@ -257,11 +274,26 @@ app.get("/users", async (req, res) => {
   } 
 });
 
+// Suppression d'un utilisateur
+
+app.delete("/users/:id", async (req, res) => {
+  try{
+    await db.query("DELETE FROM users where id = $1", [
+      req.params.id,
+    ]);  
+    res.status(200).json({
+      status: "success",
+  });
+  } catch (err) {
+    console.log(err);
+}});
+
+// Vérification de l'authentification
+
 app.post("/login", async (req,res)=>{
 
   try{
-
-    const user = await db.query(
+   const user = await db.query(
     "SELECT * FROM users WHERE email = $1 AND password = $2",
     [
       req.body.email,
@@ -283,6 +315,8 @@ app.post("/login", async (req,res)=>{
 } 
 });
 
+// Déconnexion
+
 app.post("/logout", async (req,res)=>{
 
   try{
@@ -295,13 +329,11 @@ app.post("/logout", async (req,res)=>{
 }
 });
 
-// app.all('*', async(req,res) =>{
-//   try {
+// Gestion des erreurs 404
 
-//   } catch (e) {
-//     throw new Error (e)
-//   }
-// });
+app.use((req, res, next) => {
+  res.status(404).send("Navré, cette page n'existe pas.");
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

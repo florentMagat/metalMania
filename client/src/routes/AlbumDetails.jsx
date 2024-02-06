@@ -5,7 +5,6 @@ import FindOneAlbum from '../Apis/FindOneAlbum';
 import FindOneReview from '../Apis/FindOneReview';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-// import star from "../../src/assets/star.svg";
 
 const AlbumDetails = () => {
 
@@ -38,10 +37,9 @@ const AlbumDetails = () => {
       <div className='album-details-left'>
         {album.picture && <img src={picture} alt="picture_cover" className='picture' />} 
         <div style={{display: "flex", flexDirection: "column", gap: "2vh"}}> 
-          <div>
-            {review ? review : "-"} 
+          <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "baseline", gap: "0.5vw"}}>
+            {review ? {review} + " / 10" : "- / 10"} 
             <iconify-icon icon="fluent-emoji-flat:star"></iconify-icon>
-            {/* <img src={star} alt= "star-review"/> */}
           </div> 
           <button className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Noter</button>
         </div>

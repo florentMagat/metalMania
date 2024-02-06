@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Dashboard.css";
 import { toast } from 'react-toastify';
+import 'iconify-icon';
 
 const Dashboard = () => {
 
@@ -33,6 +34,38 @@ const Dashboard = () => {
     navigate("/")
   }
 
+  const handleDelete = (user) => {
+    console.log("user.id", user.id)
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+    fetch(`http://localhost:3001/users/${user.id}`, {
+      method: "DELETE",
+      headers: {"content-type" : "application/json"},
+      body: JSON.stringify({id: user.id})})
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.text().then(text => text ? JSON.parse(text) : {})
+      })
+      .then((data) => {
+        console.log("data", data)
+        if (data.status === "success") {
+          toast.success('Utilisateur supprimé !');
+          setUsers(users.filter(selectedUser => {
+            return selectedUser.id !== user.id
+          }))
+          
+      }})
+      .catch((err) => {
+        toast.error('Erreur lors de la suppression de l\'utilisateur');
+        console.error('Erreur lors de la conversion de la réponse en JSON', err);
+      })
+      
+    }
+  }
+
+  console.log("users", users.length)
+
   return (
     <div className='background'>
         <div className='dashboard'>
@@ -45,7 +78,7 @@ const Dashboard = () => {
                   <th>Prénom</th>
                   <th>Email</th>
                   <th>Rôle</th>
-                  <th>Modifier</th>
+                  {/* <th>Modifier</th> */}
                   <th>Supprimer</th>
                 </tr>
                 {users.map((user) => (
@@ -55,8 +88,8 @@ const Dashboard = () => {
                         <td>{user.firstname}</td>
                         <td>{user.email}</td>
                         <td>{user.role_id === 1 ? "administrateur" : "utilisateur"}</td>
-                        <td></td>
-                        <td></td>
+                        {/* <td><iconify-icon icon="tabler:dots"></iconify-icon></td> */}
+                        <td onClick={()=> handleDelete(user)}><iconify-icon icon="emojione-v1:cross-mark"></iconify-icon></td>
                     </tr>
                 ))}
               </tbody>
