@@ -5,6 +5,7 @@ import AlbumFinder from "../Apis/AlbumFinder";
 import { useContext } from 'react';
 import { Albums } from '../Context/Albums';
 import "./Album.css";
+import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function AlbumsList() {
@@ -19,50 +20,62 @@ export default function AlbumsList() {
                 setAlbums(res.data.data.album)         
             } catch (err) {}
         } fetchData()
-        } ,[]);    
+        } ,[]); 
         
-    const handleDelete = async (id) => {
+    const handleDelete = async (id, picture) => {
+        const formData = new FormData()
+        formData.append('picture', picture);
+
         try {
+            await axios.request({
+                method: 'delete',
+                url: `http://localhost:3001/deleteImage`,
+                data: { picture: picture }
+            });
+
             await AlbumFinder.delete(`/${id}`);
             setAlbums(albums.filter(album => {
                 return album.id !== id
             }))
             toast.success('Album supprimé !');
-        } catch (err) {}
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handleUpdate = (id) => {
         navigate(`/albums/${id}/update`)
     }
+
     let role = sessionStorage.getItem('role');
 
     if (email && role === "1") {
-    return (
-        <div className="album">
-            {albums && albums.map(album =>{
-                return(
-                    <div className='album-presentation'>
-                        <Album { ...album }  />
-                        <div className='album-buttons'>
-                            <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
-                            <button onClick={()=> handleDelete(album.id)} className="btn" style={{backgroundColor: "#E71619", color: "black"}}>Supprimer</button>
-                        </div>
-                    </div>
-                )
-            })        
-            }
-        </div>
-    )} else {
         return (
             <div className="album">
                 {albums && albums.map(album =>{
                     return(
                         <div className='album-presentation'>
                             <Album { ...album }  />
+                            <div className='album-buttons'>
+                                <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
+                                <button onClick={()=> handleDelete(album.id, album.picture)} className="btn" style={{backgroundColor: "#E71619", color: "black"}}>Supprimer</button>
+                            </div>
                         </div>
                     )
                 })        
                 }
             </div>
+        )} else {
+            return (
+                <div className="album">
+                    {albums && albums.map(album =>{
+                        return(
+                            <div className='album-presentation'>
+                                <Album { ...album }  />
+                            </div>
+                        )
+                    })        
+                    }
+                </div>
     )}
 };

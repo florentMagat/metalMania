@@ -40,7 +40,7 @@ const Dashboard = () => {
             <table className='users-table'>
               <tbody>
                 <tr>
-                  <th>ID</th>
+                  {/* <th>ID</th> */}
                   <th>Nom</th>
                   <th>Prénom</th>
                   <th>Email</th>
@@ -50,7 +50,7 @@ const Dashboard = () => {
                 </tr>
                 {users.map((user) => (
                     <tr key={user.id}>
-                        <td>{user.id}</td>
+                        {/* <td>{user.id}</td> */}
                         <td>{user.lastname}</td>
                         <td>{user.firstname}</td>
                         <td>{user.email}</td>

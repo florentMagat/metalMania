@@ -13,8 +13,8 @@
 .album-details-left{
     display: flex;
     align-items: center;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     height: auto;
     padding-left: 5vw;
 }

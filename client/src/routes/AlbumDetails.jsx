@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react';
+import 'iconify-icon';
 import './AlbumDetails.css';
 import FindOneAlbum from '../Apis/FindOneAlbum';
+import FindOneReview from '../Apis/FindOneReview';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+// import star from "../../src/assets/star.svg";
 
 const AlbumDetails = () => {
 
   const [album, setAlbum] = useState("");
+  const [review, setReview] = useState("");
   const navigate = useNavigate();
   const id = useParams();
 
   useEffect(() => {       
     async function fetchData() {
         try {
-            const res = await FindOneAlbum.get(`/${id.id}`)
-            setAlbum(res.data.data.album)         
+            const res = await FindOneAlbum.get(`/${id.id}`);
+            setAlbum(res.data.data.album) 
+            const review = await FindOneReview.get(`/${id.id}`);
+            setReview(review.data.data.review);
         } catch (err) {}
     } fetchData()
     }, [id.id]); 
@@ -30,7 +36,15 @@ const AlbumDetails = () => {
   return (
     <div className='album-details-container'>
       <div className='album-details-left'>
-        {album.picture && <img src={picture} alt="picture_cover" className='picture' />}  
+        {album.picture && <img src={picture} alt="picture_cover" className='picture' />} 
+        <div style={{display: "flex", flexDirection: "column", gap: "2vh"}}> 
+          <div>
+            {review ? review : "-"} 
+            <iconify-icon icon="fluent-emoji-flat:star"></iconify-icon>
+            {/* <img src={star} alt= "star-review"/> */}
+          </div> 
+          <button className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Noter</button>
+        </div>
       </div>
       <div className='album-details-right'>
         <div>

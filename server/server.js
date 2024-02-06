@@ -7,6 +7,8 @@ const app = express();
 const bcrypt = require("bcrypt");
 const morgan = require("morgan");
 const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 const storage = multer.diskStorage ({
   destination: "./images",
@@ -52,6 +54,47 @@ app.get("/api/albums/:id", async (req, res) => {
     console.log(err);
   }
 });
+
+
+
+
+
+app.get("/api/reviews/:id", async (req, res) => {
+  try {
+    const results = await db.query("select * from reviews where album_id = $1", [
+      req.params.id,
+    ]);
+    res.status(200).json({
+      status: "success",
+      data: {
+        review: results.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/api/reviews/:id", async (req, res) => {
+  try {
+    const results = await db.query("INSERT INTO REVIEWS (rating) values ($1) returning *", [
+      req.params.id,
+    ]);
+    res.status(200).json({
+      status: "success",
+      data: {
+        review: results.rows[0],
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
+
+
+
 
 app.post("/api/albums/add", async (req, res) => {
   console.log(req.body);
@@ -132,6 +175,29 @@ app.post('/upload', upload.single('file'), (req,res) => {
   } catch (err) {
       console.log(err); 
   }
+});
+
+app.delete('/deleteImage', (req, res) => {
+  const picture = req.body.picture;
+  // Chemin du fichier à supprimer
+  const filePath = path.join(__dirname, '/images/', picture);
+
+  // Vérifie si le fichier existe
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      res.status(200).json({ status: 'success', message: "Cette image n'existe pas" });
+    } else {
+      // Si le fichier existe, le supprime
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ status: 'error', message: 'Cette image ne peut pas être supprimée' });
+        } else {
+          res.status(200).json({ status: 'success', message: 'Image supprimée' });
+        }
+      });
+    }
+  });
 });
 
 app.put('/updateImage', upload.single('file'), (req,res) => {

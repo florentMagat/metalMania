@@ -63,7 +63,6 @@ const UpdatePage = (props) => {
     axios.post('http://localhost:3001/upload', formData)
       .then(res => {
           console.log(res)
-          // Après avoir téléchargé l'image, faites une autre requête pour mettre à jour l'URL de l'image dans la base de données
           axios.put('http://localhost:3001/updateImage', { imageUrl: res.data.pathname })
               .then(res => {
                   console.log(res)
