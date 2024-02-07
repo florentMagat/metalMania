@@ -12,7 +12,7 @@ const Page404 = () => {
     return (
         <div className="main">
             <h1>Egaré ?</h1>
-            <button onClick={handleClick} className="btn btn-primary" style={{marginTop: "5vh"}} >Retour à l'accueil</button>
+            <button onClick={handleClick} className="btn" style={{marginTop: "5vh", backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1.5vh", borderRadius: "10px"}} >Retour à l'accueil</button>
         </div>
     )
 }

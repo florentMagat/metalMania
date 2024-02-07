@@ -15,6 +15,41 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    const isPasswordValid = passwordRegex.test(password);
+    const isEmailValid = emailRegex.test(email);
+  
+    if (!isPasswordValid) {
+      toast.info("Le mot de passe est invalide. Il doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      return;
+    }
+  
+    if (!isEmailValid) {
+      toast.info("L'adresse e-mail est invalide. Veuillez entrer une adresse e-mail valide.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      return;
+    }
+
     let informations = { lastname, firstname, email, password, role_id };
 
     fetch("http://localhost:3001/register", {
@@ -22,15 +57,15 @@ export default function Register() {
       headers: {"content-type" : "application/json"},
       body:JSON.stringify(informations)
     }).then((res)=>{
-      toast.success('Enregistrement réussi');
+      toast.success("Enregistrement réussi");
       navigate("/login");
     }).catch((err)=>{
-      toast.error('erreur')
+      toast.error("erreur")
     });
   }
 
   const handleRegister = () => {
-    navigate('/login')
+    navigate("/login")
   }
 
   return (
@@ -53,21 +88,21 @@ export default function Register() {
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <label className="form-label" for="form3Example5">Last Name</label>
             </div>
-            <input style={{textAlign: "center"}} type="text" name="Lastname" id="form3Example5" className="form-control" alue={lastname} onChange={e=>setLastname(e.target.value)}  /> 
+            <input style={{textAlign: "center"}} type="text" name="Lastname" id="form3Example5" className="form-control" value={lastname} onChange={e=>setLastname(e.target.value)}  /> 
           </div>
 
           <div className="form-outline mb-3">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <label className="form-label" for="form3Example3">Email address</label>
             </div>
-            <input style={{textAlign: "center"}} type="email" name="email" id="form3Example3" className="form-control" alue={email} onChange={e=>setEmail(e.target.value)}  />  
+            <input style={{textAlign: "center"}} type="email" name="email" id="form3Example3" className="form-control" value={email} onChange={e=>setEmail(e.target.value)}  />  
           </div>
 
           <div className="form-outline mb-3">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <label className="form-label" for="form3Example4">Password</label>
             </div>
-            <input style={{textAlign: "center"}} type="password" name="password" id="form3Example4" className="form-control" alue={password} onChange={e=>setPassword(e.target.value)}  />
+            <input style={{textAlign: "center"}} type="password" name="password" id="form3Example4" className="form-control" value={password} onChange={e=>setPassword(e.target.value)}  />
           </div>
 
           <div className='register-buttons'>

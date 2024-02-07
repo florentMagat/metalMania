@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import AlbumsList from '../components/AlbumsList';
 import { useNavigate } from 'react-router-dom';
+export const GenreContext = React.createContext();
 
 const Home = () => {
-  const GenreContext = React.createContext();
+  // const GenreContext = React.createContext();
   const navigate = useNavigate();
   const [genre, setGenre] = useState("");
 

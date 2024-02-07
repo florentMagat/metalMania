@@ -89,7 +89,7 @@ const Dashboard = () => {
                         <td>{user.email}</td>
                         <td>{user.role_id === 1 ? "administrateur" : "utilisateur"}</td>
                         {/* <td><iconify-icon icon="tabler:dots"></iconify-icon></td> */}
-                        <td onClick={()=> handleDelete(user)}><iconify-icon icon="emojione-v1:cross-mark"></iconify-icon></td>
+                        {user.role_id === 2 ? <td onClick={()=> handleDelete(user)}><iconify-icon icon="emojione-v1:cross-mark"></iconify-icon></td> : <td></td>}
                     </tr>
                 ))}
               </tbody>
