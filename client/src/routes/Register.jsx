@@ -50,7 +50,7 @@ export default function Register() {
       return;
     }
 
-    let informations = { lastname, firstname, email, password, role_id };
+    let informations = { firstname, lastname, email, password, role_id };
 
     fetch("http://localhost:3001/register", {
       method: "POST",

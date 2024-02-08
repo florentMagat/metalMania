@@ -35,6 +35,10 @@ export default function Header() {
                 onClick={()=> setGenre("")}>
                   Tous
               </button>
+              {/* <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}
+                onClick={()=> setGenre("Top 10")}>
+                  Top 10
+              </button> */}
               <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}
                 onClick={()=> setGenre("Death Metal")}>
                   Death Metal
@@ -78,6 +82,10 @@ export default function Header() {
                 onClick={()=> setGenre("")}>
                   Tous
               </button>
+              {/* <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}
+                onClick={()=> setGenre("Top 10")}>
+                  Top 10
+              </button> */}
               <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}
                 onClick={()=> setGenre("Death Metal")}>
                   Death Metal

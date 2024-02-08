@@ -42,7 +42,6 @@ export default function Login() {
         res.json().then((data) => {
           // toast.success('Login réussi');
           setIsLogged(true);
-          console.log("data.role", data.data.role)
           sessionStorage.setItem('email', email);
           sessionStorage.setItem('role', data.data.role);
           navigate("/");

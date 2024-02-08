@@ -16,8 +16,6 @@ export default function AlbumsList( ) {
     const { genre } = useContext(GenreContext);
     let email = sessionStorage.getItem('email');
 
-    console.log("search", search)
-
     useEffect(() => {       
         async function fetchData() {
             try {
@@ -54,17 +52,19 @@ export default function AlbumsList( ) {
 
     let role = sessionStorage.getItem('role');
 
+    console.log("role", role)
+
     if (email && role === "1") {
         return (
             <div className='container'>
-                <input type="search" className='searchBar' label="recherche" onChange={(e)=>setSearch(e.target.value)}></input>
+                <input type="search" className='searchBar' placeholder="rechercher un album ou un groupe" onChange={(e)=>setSearch(e.target.value)}></input>
                 <div className="album">
                     {albums && albums.map(album => {
                         if (search.length > 0) {
                             if (album.title.toLowerCase().includes(search.toLowerCase()) || album.band.toLowerCase().includes(search.toLowerCase())){ 
                                 return(
                                     <div className='album-presentation'>
-                                        <Album { ...album }  />
+                                        <Album key={album.id} { ...album }  />
                                         <div className='album-buttons'>
                                             <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
                                             <button onClick={()=> handleDelete(album.id, album.picture)} className="btn" style={{backgroundColor: "#E71619", color: "black"}}>Supprimer</button>
@@ -77,7 +77,7 @@ export default function AlbumsList( ) {
                             if (genre === album.genre) {
                                 return(
                                     <div className='album-presentation'>
-                                        <Album { ...album }  />
+                                        <Album key={album.id} { ...album }  />
                                         <div className='album-buttons'>
                                             <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
                                             <button onClick={()=> handleDelete(album.id, album.picture)} className="btn" style={{backgroundColor: "#E71619", color: "black"}}>Supprimer</button>
@@ -87,7 +87,7 @@ export default function AlbumsList( ) {
                             } else if (genre === "") {
                                 return(
                                     <div className='album-presentation'>
-                                        <Album { ...album }  />
+                                        <Album key={album.id} { ...album }  />
                                         <div className='album-buttons'>
                                             <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
                                             <button onClick={()=> handleDelete(album.id, album.picture)} className="btn" style={{backgroundColor: "#E71619", color: "black"}}>Supprimer</button>
@@ -102,14 +102,14 @@ export default function AlbumsList( ) {
         )} else {
             return (
                 <div className='container'>
-                <input type="search" className='searchBar' label="recherche" onChange={(e)=>setSearch(e.target.value)}></input>
+                <input type="search" className='searchBar' placeholder="rechercher un album ou un groupe" onChange={(e)=>setSearch(e.target.value)}></input>
                 <div className="album">
                     {albums && albums.map(album => {
                         if (search.length > 0) {
                             if (album.title.toLowerCase().includes(search.toLowerCase()) || album.band.toLowerCase().includes(search.toLowerCase())){ 
                                 return(
                                     <div className='album-presentation'>
-                                        <Album { ...album }  />
+                                        <Album key={album.id} { ...album }  />
                                     </div>
                                 )} else {
                                     return null;
@@ -118,13 +118,13 @@ export default function AlbumsList( ) {
                             if (genre === album.genre) {
                                 return(
                                     <div className='album-presentation'>
-                                        <Album { ...album }  />
+                                        <Album key={album.id} { ...album }  />
                                     </div>
                                 )
                             } else if (genre === "") {
                                 return(
                                     <div className='album-presentation'>
-                                        <Album { ...album }  />
+                                        <Album key={album.id} { ...album }  />
                                     </div>
                                 )}}
                         return null;

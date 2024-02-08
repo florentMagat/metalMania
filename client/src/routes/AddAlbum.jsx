@@ -18,9 +18,16 @@ export default function AddAlbum() {
   const [picture, setPicture] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState("");
+  const [isUploaded, setIsUploaded] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!isUploaded) {
+        const confirm = window.confirm("Vous n'avez pas encore ajouté d'image !");
+        if (!confirm) {
+          return;
+        }
+    }
     try {
         const res = await AlbumFinder.post("/add", {
             title,
@@ -51,6 +58,7 @@ export default function AddAlbum() {
         .then(res => {
             console.log(res.data.data.filename)
             toast.success("Ajout d'une image réussi !");
+            setIsUploaded(true);
         })  
         .catch(er => console.log(er))
         console.log(file)
@@ -59,6 +67,9 @@ export default function AddAlbum() {
   const handleClick = () => {
     navigate("/")
   }
+
+  console.log("picture", picture);
+  console.log("file", file)
 
   return (
     <>
