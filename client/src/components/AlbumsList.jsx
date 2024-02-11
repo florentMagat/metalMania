@@ -26,23 +26,26 @@ export default function AlbumsList( ) {
         } ,[]); 
         
     const handleDelete = async (id, picture) => {
-        const formData = new FormData()
+        const formData = new FormData();
         formData.append('picture', picture);
-
-        try {
-            await axios.request({
-                method: 'delete',
-                url: `http://localhost:3001/deleteImage`,
-                data: { picture: picture }
-            });
-
-            await AlbumFinder.delete(`/${id}`);
-            setAlbums(albums.filter(album => {
-                return album.id !== id
-            }))
-            toast.success('Album supprimé !');
-        } catch (err) {
-            console.log(err);
+        if (window.confirm('Êtes-vous sûr de vouloir supprimer cet album ?')) {
+            try {
+                if (picture) {  
+                await axios.request({
+                    method: 'delete',
+                    url: `http://localhost:3001/deleteImage`,
+                    data: { picture: picture }
+                });
+                }
+                await AlbumFinder.delete(`/${id}`);
+                setAlbums(albums.filter(album => {
+                    return album.id !== id
+                }))
+                toast.success('Album supprimé !');
+            } catch (err) {
+                console.log(err);
+                toast.error('Erreur lors de la suppression de l\'album');
+            }
         }
     };
 
@@ -51,8 +54,6 @@ export default function AlbumsList( ) {
     }
 
     let role = sessionStorage.getItem('role');
-
-    console.log("role", role)
 
     if (email && role === "1") {
         return (

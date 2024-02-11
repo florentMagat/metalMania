@@ -10,9 +10,13 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(()=> {
+    let token = localStorage.getItem('jwt');
     fetch("http://localhost:3001/users", {
       method: "GET",
-      headers: {"content-type" : "application/json"},
+      headers: {
+        "content-type" : "application/json",
+        authorization: `Bearer ${token}`,
+      },
     }).then((res)=>{
       res.json().then((data) => {
         setUsers(data.data.users);

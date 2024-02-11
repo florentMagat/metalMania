@@ -23,7 +23,7 @@ export default function AddAlbum() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!isUploaded) {
-        const confirm = window.confirm("Vous n'avez pas encore ajouté d'image !");
+        const confirm = window.confirm("Vous n'avez pas ajouté d'image, voulez-vous continuer ?");
         if (!confirm) {
           return;
         }

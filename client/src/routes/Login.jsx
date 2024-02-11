@@ -41,7 +41,9 @@ export default function Login() {
       }).then((res)=>{
         res.json().then((data) => {
           // toast.success('Login réussi');
+          console.log("IMP", data.token);
           setIsLogged(true);
+          localStorage.setItem('jwt', data.token);
           sessionStorage.setItem('email', email);
           sessionStorage.setItem('role', data.data.role);
           navigate("/");

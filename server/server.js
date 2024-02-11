@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const session = require('express-session');
 const cors = require("cors");
 const db = require("./db");
 const app = express();
@@ -9,8 +10,13 @@ const morgan = require("morgan");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
-const session = require('express-session');
+const jwt = require('jsonwebtoken');
 
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 // // Vérification de l'authentification pour l'accès à certaines routes
 // const passport = require('passport');
@@ -83,6 +89,44 @@ app.use(cors());
 app.use(express.json());
 app.use("/images", express.static("images"));
 app.use(express.urlencoded({ extended: false }));
+
+function ensureAuthenticated(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+  console.log("token ensureAuthenticated", token)
+
+  if (token == null) {
+    return res.sendStatus(401);
+  }
+
+  jwt.verify(token, 'your_secret_key', (err, user) => {
+    if (err) {
+      console.log("errJWT", err);
+      // return res.sendStatus(403);
+    }
+
+    req.user = user;
+    next();
+  });
+}
+
+function ensureRole(role_id) {
+  return function(req, res, next) {
+
+
+    console.log("req.user", req.user)
+    console.log("role_id", role_id)
+    console.log("req.user.role_id", req.user.userId)
+
+
+
+    if (!req.user || req.user.userId !== role_id) {
+      console.log("erreur ensureRole")
+      return res.sendStatus(403);
+    }
+    next();
+  }
+}
 
 // Consultation de la liste des albums
 
@@ -331,7 +375,7 @@ app.post("/register", async (req, res) => {
 
 // Consultation de la liste des utilisateurs
 
-app.get("/users", async (req, res) => {
+app.get("/users", ensureAuthenticated, ensureRole(1), async (req, res) => {
   try {
     const users = await db.query("SELECT * FROM users");
     console.log("data", users);
@@ -372,15 +416,19 @@ app.post("/login", async (req, res) => {
       const match = await bcrypt.compare(req.body.password, user.rows[0].password);
 
       if (match) {
-        console.log("data", user.rows[0]);
+        // console.log("data", user.rows[0]);
+        const userId = user.rows[0].role_id;
+        const token = jwt.sign({ userId }, 'your_secret_key');
+        req.session.jwt = token;
+        console.log("req.session.jwt", req.session.jwt);
         res.status(200).json({
+          token,
           status: "success",
           data: {
             user: user.rows[0],
             role: user.rows[0].role_id,
           }
-        });
-      } else {
+        })} else {
         res.status(401).json({ message: 'Authentication failed' });
       }
     } else {
