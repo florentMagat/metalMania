@@ -11,67 +11,13 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 
 app.use(session({
-  secret: 'your_secret_key',
+  secret: "SECRET_KEY",
   resave: false,
   saveUninitialized: false,
 }));
-
-// // Vérification de l'authentification pour l'accès à certaines routes
-// const passport = require('passport');
-// const LocalStrategy = require('passport-local').Strategy;
-
-// passport.use(new LocalStrategy(
-//   function verify(email, password, done) {
-//     db.query(
-//       "SELECT * FROM users WHERE email = $1 AND password = $2",
-//       [email, password],
-//       function(err, result) {
-//         if (err) {
-//           return done(err);
-//         }
-//         const user = result.rows[0];
-//         if (!user) {
-//           return done(null, false);
-//         }
-//         if (user.role_id === 2) {
-//           return done(null, false);
-//         }
-//         return done(null, user);
-//       }
-//     );
-//   }
-// ));
-
-// passport.serializeUser(function(id, done) {
-//   done(null, id);
-// });
-
-// passport.deserializeUser(function(id, done) {
-//   db.query("SELECT * FROM users WHERE id = $1", [id], function(err, result) {
-//     if (err) {
-//       return done(err);
-//     }
-//     done(null, result.rows[0]);
-//   });
-// });
-
-// function ensureAuthenticated(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     if (req.user.role_id === 1) {
-//       return next();
-//     } else {
-//       res.redirect('/');
-//     }
-//   } else {
-//     res.redirect('/login');
-//   }
-// };
-
-// app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: false }));
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 //  schémas JOI
 const { registerSchema } = require("./schemas");
@@ -85,26 +31,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// Limite le nombre de requêtes par IP (100 requêtes toutes les 15 minutes)
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+});
+
 app.use(cors());
 app.use(express.json());
+app.use(limiter);
+app.use(morgan("dev"));
 app.use("/images", express.static("images"));
 app.use(express.urlencoded({ extended: false }));
+
+// Vérification de l'authentification et du role_id pour l'accès à certaines routes
 
 function ensureAuthenticated(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
-  console.log("token ensureAuthenticated", token)
+  console.log("token ensureAuthenticated", token);
 
   if (token == null) {
     return res.sendStatus(401);
   }
-
-  jwt.verify(token, 'your_secret_key', (err, user) => {
+  jwt.verify(token, "SECRET_KEY", (err, user) => {
     if (err) {
-      console.log("errJWT", err);
-      // return res.sendStatus(403);
+      return res.sendStatus(403);
     }
-
     req.user = user;
     next();
   });
@@ -112,16 +66,7 @@ function ensureAuthenticated(req, res, next) {
 
 function ensureRole(role_id) {
   return function(req, res, next) {
-
-
-    console.log("req.user", req.user)
-    console.log("role_id", role_id)
-    console.log("req.user.role_id", req.user.userId)
-
-
-
     if (!req.user || req.user.userId !== role_id) {
-      console.log("erreur ensureRole")
       return res.sendStatus(403);
     }
     next();
@@ -130,7 +75,7 @@ function ensureRole(role_id) {
 
 // Consultation de la liste des albums
 
-app.get("/api/albums", async (req, res) => {
+app.get("/api/albums", ensureAuthenticated, ensureRole(1), async (req, res) => {
   try {
     const results = await db.query("select * from albums;");
     res.status(200).json({
@@ -147,7 +92,7 @@ app.get("/api/albums", async (req, res) => {
 
 // Consultation d'un album
 
-app.get("/api/albums/:id", async (req, res) => {
+app.get("/api/albums/:id", ensureAuthenticated, ensureRole(1, 2), async (req, res) => {
   try {
     const results = await db.query("select * from albums where id = $1", [
       req.params.id,
@@ -201,7 +146,7 @@ app.post("/api/reviews/:id", async (req, res) => {
 
 // Ajout d'un album
 
-app.post("/api/albums/add", async (req, res) => {
+app.post("/api/albums/add", ensureAuthenticated, ensureRole(1), async (req, res) => {
   console.log(req.body);
 
   try {
@@ -230,7 +175,7 @@ app.post("/api/albums/add", async (req, res) => {
 
 // Modification d'un album
 
-app.put("/api/albums/:id", async (req, res) => {
+app.put("/api/albums/:id", ensureAuthenticated, ensureRole(1), async (req, res) => {
   try {
     const results = await db.query(
       "UPDATE albums SET title = $1, band = $2,  year = $3, genre = $4, picture = $5, description = $6 where id = $7 returning *",
@@ -258,7 +203,7 @@ app.put("/api/albums/:id", async (req, res) => {
 
 // Suppression d'un album
 
-app.delete("/api/albums/:id", async (req, res) => {
+app.delete("/api/albums/:id", ensureAuthenticated, ensureRole(1), async (req, res) => {
   try {
     const results = await db.query("DELETE FROM albums where id = $1", [
       req.params.id,
@@ -273,7 +218,7 @@ app.delete("/api/albums/:id", async (req, res) => {
 
 // Ajout d'une image
 
-app.post("/upload", upload.single("file"), (req, res) => {
+app.post("/upload", upload.single("file"), ensureAuthenticated, ensureRole(1), (req, res) => {
   try {
     req.body;
     req.file;
@@ -290,7 +235,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 
 // Modification d'une image
 
-app.put("/updateImage", upload.single("file"),(req, res) => {
+app.put("/updateImage", upload.single("file"), ensureAuthenticated, ensureRole(1), (req, res) => {
   try {
     req.body;
     req.file;
@@ -307,7 +252,7 @@ app.put("/updateImage", upload.single("file"),(req, res) => {
 
 // Suppression d'une image
 
-app.delete("/deleteImage", (req, res) => {
+app.delete("/deleteImage", ensureAuthenticated, ensureRole(1), (req, res) => {
   const picture = req.body.picture;
   // Chemin du fichier à supprimer
   const filePath = path.join(__dirname, "/images/", picture);
@@ -357,11 +302,9 @@ app.post("/register", async (req, res) => {
         req.body.firstname,
         req.body.email,
         hashedPassword,
-        // req.body.password,
         req.body.role_id,
       ]
     );
-    console.log("results", results);
     res.status(201).json({
       statuts: "success",
       data: {
@@ -392,7 +335,7 @@ app.get("/users", ensureAuthenticated, ensureRole(1), async (req, res) => {
 
 // Suppression d'un utilisateur
 
-app.delete("/users/:id", async (req, res) => {
+app.delete("/users/:id", ensureAuthenticated, ensureRole(1), async (req, res) => {
   try {
     await db.query("DELETE FROM users where id = $1", [req.params.id]);
     res.status(200).json({
@@ -414,11 +357,9 @@ app.post("/login", async (req, res) => {
 
     if (user.rows.length > 0) {
       const match = await bcrypt.compare(req.body.password, user.rows[0].password);
-
       if (match) {
-        // console.log("data", user.rows[0]);
         const userId = user.rows[0].role_id;
-        const token = jwt.sign({ userId }, 'your_secret_key');
+        const token = jwt.sign({ userId }, "SECRET_KEY");
         req.session.jwt = token;
         console.log("req.session.jwt", req.session.jwt);
         res.status(200).json({

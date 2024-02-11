@@ -28,8 +28,6 @@ const AlbumDetails = () => {
     navigate("/")
   }
 
-  console.log("album, album", album)
-
   const picture = `http://localhost:3001/images/${album.picture}`;
 
   return (

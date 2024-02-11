@@ -9,12 +9,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { GenreContext } from '../routes/Home';
 
-export default function AlbumsList( ) {
+export default function AlbumsList() {
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
     const { albums, setAlbums } = useContext(Albums);
     const { genre } = useContext(GenreContext);
     let email = sessionStorage.getItem('email');
+    let token = localStorage.getItem('jwt');
+    let role = sessionStorage.getItem('role');
 
     useEffect(() => {       
         async function fetchData() {
@@ -27,14 +29,18 @@ export default function AlbumsList( ) {
         
     const handleDelete = async (id, picture) => {
         const formData = new FormData();
-        formData.append('picture', picture);
+        formData.append('picture', picture);  
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet album ?')) {
             try {
                 if (picture) {  
                 await axios.request({
                     method: 'delete',
                     url: `http://localhost:3001/deleteImage`,
-                    data: { picture: picture }
+                    data: { picture: picture },
+                    headers: {
+                        "content-type" : "application/json",
+                        authorization: `Bearer ${token}`,
+                      },
                 });
                 }
                 await AlbumFinder.delete(`/${id}`);
@@ -52,8 +58,6 @@ export default function AlbumsList( ) {
     const handleUpdate = (id) => {
         navigate(`/albums/${id}/update`)
     }
-
-    let role = sessionStorage.getItem('role');
 
     if (email && role === "1") {
         return (

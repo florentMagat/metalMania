@@ -31,11 +31,12 @@ export default function Login() {
 
     const ProceedLogin = (e) => {
       e.preventDefault();
-      let informations = { email, password }
+      let informations = { email, password };
   
       fetch("http://localhost:3001/login", {
         method: "POST",
-        headers: {"content-type" : "application/json"},
+        headers: {"content-type" : "application/json",
+      },
         body:JSON.stringify(informations)
 
       }).then((res)=>{

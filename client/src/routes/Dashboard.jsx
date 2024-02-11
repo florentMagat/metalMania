@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import 'iconify-icon';
 
 const Dashboard = () => {
-
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
