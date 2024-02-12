@@ -33,7 +33,7 @@ const AlbumDetails = () => {
   return (
     <div className='album-details-container'>
       <div className='album-details-left'>
-        {album.picture && <img src={picture} alt="picture_cover" className='picture' />} 
+        {album.picture && <img crossorigin='anonymous' src={picture} alt="picture_cover" className='picture' />} 
         <div style={{display: "flex", flexDirection: "column", gap: "2vh"}}> 
           <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "baseline", gap: "0.5vw"}}>
             {review ? {review} + " / 10" : "- / 10"} 

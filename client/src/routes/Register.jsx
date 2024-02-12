@@ -6,7 +6,6 @@ import "./Register.css";
 export default function Register() {
 
   const navigate = useNavigate();
-
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");

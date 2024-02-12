@@ -13,7 +13,7 @@ export default function Album( props ) {
     <>
     <div>
       <div className="album-details" onClick={ () => handleDetails(props.id) }>
-      <img src={picture} alt="album_cover" className='image'/>
+      <img crossorigin='anonymous' src={picture} alt="album_cover" className='image'/>
       </div>
       <div className='album-title'>
         <h3 className='title'>"{props.title}"</h3>
