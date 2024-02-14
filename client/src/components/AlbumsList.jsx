@@ -15,8 +15,11 @@ export default function AlbumsList() {
     const { albums, setAlbums } = useContext(Albums);
     const { genre } = useContext(GenreContext);
     let email = sessionStorage.getItem('email');
-    let token = localStorage.getItem('jwt');
     let role = sessionStorage.getItem('role');
+
+    // let token = localStorage.getItem('jwt');
+    let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
+    let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
 
     useEffect(() => {       
         async function fetchData() {
@@ -25,7 +28,7 @@ export default function AlbumsList() {
                 setAlbums(res.data.data.album)         
             } catch (err) {}
         } fetchData()
-        } ,[]); 
+    }, []); 
         
     const handleDelete = async (id, picture) => {
         const formData = new FormData();
@@ -40,7 +43,7 @@ export default function AlbumsList() {
                     headers: {
                         "content-type" : "application/json",
                         authorization: `Bearer ${token}`,
-                      },
+                    },
                 });
                 }
                 await AlbumFinder.delete(`/${id}`);
@@ -133,9 +136,10 @@ export default function AlbumsList() {
                                     </div>
                                 )}}
                         return null;
-                    })        
+                    })     
                     }
                 </div>
             </div>
-    )}
+        )
+    }
 };

@@ -4,6 +4,7 @@ import AlbumDetails from './routes/AlbumDetails';
 import UpdatePage from './routes/UpdatePage';
 import Home from './routes/Home';
 import Dashboard from './routes/Dashboard';
+import UserDashboard from './routes/UserDashboard';
 import Login from './routes/Login';
 import AddAlbum from './routes/AddAlbum';
 import Register from './routes/Register';
@@ -20,6 +21,7 @@ const App = () => {
           <Route exact path = "/" element = { <Home/> } />
           <Route exact path = "/login" element = { <Login/> } />
           <Route exact path = "/dashboard" element = { <Dashboard/> } />
+          <Route exact path = "/user/dashboard" element = { <UserDashboard/> } />
           <Route exact path = "/albums/:id" element = { <AlbumDetails/> } />
           <Route exact path = "/albums/add" element = { <AddAlbum/> } />
           <Route exact path = "/register" element = { <Register/> } />

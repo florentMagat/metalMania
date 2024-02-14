@@ -4,7 +4,6 @@ const db = require("../db");
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 
-
 // Vérification de l'authentification
 
 router.post("/login", async (req, res) => {
@@ -19,8 +18,11 @@ router.post("/login", async (req, res) => {
         if (match) {
           const userId = user.rows[0].role_id;
           const token = jwt.sign({ userId }, "SECRET_KEY");
+          // const token = req.cookies.jwt;
           req.session.jwt = token;
-          console.log("req.session.jwt", req.session.jwt);
+          // req.cookies("jwt", token);
+          res.cookie('jwt', token, { httpOnly: true, sameSite: 'strict' });
+          // console.log("req.session.jwt", req.session.jwt);
           res.status(200).json({
             token,
             status: "success",
@@ -44,6 +46,8 @@ router.post("/login", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
     try {
+        // à la déconnexion, suppression du cookie JWT
+        res.clearCookie('jwt');
         res.status(200).json({
         msg: "logout",
         code: 200,

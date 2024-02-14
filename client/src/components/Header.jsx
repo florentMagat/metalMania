@@ -21,6 +21,10 @@ export default function Header() {
     navigate("/dashboard")
   }
 
+  const handleUserDashboard = () => {
+    navigate("/user/dashboard")
+  }
+
   let email = sessionStorage.getItem('email');
   let role = sessionStorage.getItem('role');
 
@@ -109,7 +113,8 @@ export default function Header() {
             </div>
     
             <div className='header-connection'>
-              <button onClick={handleSubmit} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Se déconnecter</button>   
+              <button onClick={handleSubmit} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Se déconnecter</button>  
+              <button onClick={handleUserDashboard} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Mon Compte</button> 
             </div>
           </div>
         </div> 

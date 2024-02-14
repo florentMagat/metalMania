@@ -4,7 +4,7 @@ import "./Dashboard.css";
 import { toast } from 'react-toastify';
 import 'iconify-icon';
 
-const Dashboard = () => {
+const UserDashboard = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
@@ -40,9 +40,11 @@ const Dashboard = () => {
     navigate("/")
   }
 
+  console.log("IMP", document.cookie);
+
   const handleDelete = (user) => {
     console.log("user.id", user.id)
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) {
     fetch(`http://localhost:3001/users/${user.id}`, {
       method: "DELETE",
       headers: {"content-type" : "application/json"},
@@ -72,7 +74,7 @@ const Dashboard = () => {
   return (
     <div className='background'>
         <div className='dashboard'>
-            <h1 className='users-title'>Gestion des utilisateurs</h1>
+            <h1 className='users-title'>Mon Compte</h1>
             <table className='users-table'>
               <tbody>
                 <tr>
@@ -103,4 +105,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard;
+export default UserDashboard;

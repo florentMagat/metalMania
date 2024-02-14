@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 export const GenreContext = React.createContext();
 
 const Home = () => {
-  // const GenreContext = React.createContext();
   const navigate = useNavigate();
   const [genre, setGenre] = useState("");
 

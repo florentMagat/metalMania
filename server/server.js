@@ -1,5 +1,5 @@
 require("dotenv").config();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 const express = require("express");
 const session = require("express-session");
 const cors = require("cors");
@@ -16,12 +16,16 @@ const imagesRoutes = require('./routes/imagesRoutes');
 const reviewsRoutes = require('./routes/reviewsRoutes');
 const authentificationsRoutes = require('./routes/authentificationsRoutes');
 
-// Limite le nombre de requêtes par IP (100 requêtes toutes les 15 minutes)
+// Limite le nombre de requêtes par IP (50 requêtes/seconde)
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100
+  windowMs: 1000,
+  max: 50,
 });
+
+const cookieParser = require('cookie-parser');
+
+app.use(cookieParser());
 
 app.use(session({
   secret: "SECRET_KEY",
@@ -34,7 +38,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      imgSrc: ["'self'", "http://localhost:3001/images", "http://localhost:3001", 'data:'],
+      imgSrc: ["'self'"],
     },
   })
 );

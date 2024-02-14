@@ -5,7 +5,7 @@ const { ensureAuthenticated, ensureRole } = require("../services/authenticatedRo
 
 // Consultation de la liste des albums
 
-router.get("/api/albums", ensureAuthenticated, ensureRole(1), async (req, res) => {
+router.get("/api/albums", ensureAuthenticated, ensureRole(1, 2), async (req, res) => {
     try {
       const results = await db.query("select * from albums;");
       res.status(200).json({

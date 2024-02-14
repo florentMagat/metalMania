@@ -9,7 +9,6 @@ export default function Login() {
   const [email, emailupdate] = useState("");
   const [password, passwordupdate] = useState("");
   const [isLogged, setIsLogged] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -43,7 +42,9 @@ export default function Login() {
         res.json().then((data) => {
           // toast.success('Login réussi');
           setIsLogged(true);
-          localStorage.setItem('jwt', data.token);
+          document.cookie = `jwt=${data.token}`;
+          // res.cookie("jwt", data.token, {httpOnly: true, sameSite: true, maxAge: 3600000, secure: true});
+          // localStorage.setItem('jwt', data.token);
           sessionStorage.setItem('email', email);
           sessionStorage.setItem('role', data.data.role);
           navigate("/");
