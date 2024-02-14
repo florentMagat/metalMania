@@ -11,6 +11,9 @@ export default function Login() {
   const [isLogged, setIsLogged] = useState(false);
   const navigate = useNavigate();
 
+  let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
+  let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
+
   useEffect(()=>{
     sessionStorage.clear();
   },[]);
@@ -35,6 +38,7 @@ export default function Login() {
       fetch("http://localhost:3001/login", {
         method: "POST",
         headers: {"content-type" : "application/json",
+        authorization: `Bearer ${token}`,
       },
         body:JSON.stringify(informations)
 

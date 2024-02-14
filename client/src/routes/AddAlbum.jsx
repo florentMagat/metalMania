@@ -17,6 +17,7 @@ export default function AddAlbum() {
   const [genre, setGenre] = useState("");
   const [picture, setPicture] = useState("");
   const [description, setDescription] = useState("");
+  const [video, setVideo] = useState("");
   const [file, setFile] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
 
@@ -36,6 +37,7 @@ export default function AddAlbum() {
             genre,
             picture,
             description,
+            video
         })      
         toast.success('Nouvel album ajouté avec succès !');
         navigate('/');
@@ -67,9 +69,6 @@ export default function AddAlbum() {
   const handleClick = () => {
     navigate("/")
   }
-
-  console.log("picture", picture);
-  console.log("file", file)
 
   return (
     <>
@@ -106,14 +105,16 @@ export default function AddAlbum() {
                     <div className='form-div'>
                         <textarea type = "text-area" style={{textAlign: "center", borderRadius: "10px"}} value={description} onChange={e => setDescription(e.target.value)} placeholder="description" />
                     </div>
-                    <button onClick={handleSubmit} type="submit" style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px"}}>Valider</button>
-                </div>
-                
-            </form>    
-        </div>
-        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", paddingTop: "5vh", marginBottom:"3vh"}}>
-            <button onClick={handleClick} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Retour à l'accueil</button>
-        </div>
+                    <div className='form-div'>
+                        <input type = "text" style={{textAlign: "center", borderRadius: "10px", width: "100%"}} value={video} onChange={e => setVideo(e.target.value)} placeholder="lien vers la vidéo" />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "row", gap: "2vw", justifyContent: "center"}}>
+                        <button onClick={handleSubmit} type="submit" style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px", marginTop: "2vh"}}>Valider</button>
+                        <button onClick={handleClick} style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px", marginTop: "2vh"}}>Retour à l'accueil</button>
+                    </div>
+                </div>        
+            </form> 
+        </div>   
     </>
   )
 }

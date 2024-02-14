@@ -43,7 +43,7 @@ router.get("/api/albums/:id", ensureAuthenticated, ensureRole(1, 2), async (req,
 router.post("/api/albums/add", ensureAuthenticated, ensureRole(1), async (req, res) => { 
     try {
       const results = await db.query(
-        "INSERT INTO albums (title, band, year, genre, picture, description) values ($1, $2, $3, $4, $5, $6) returning *",
+        "INSERT INTO albums (title, band, year, genre, picture, description, video) values ($1, $2, $3, $4, $5, $6, $7) returning *",
         [
           req.body.title,
           req.body.band,
@@ -51,6 +51,7 @@ router.post("/api/albums/add", ensureAuthenticated, ensureRole(1), async (req, r
           req.body.genre,
           req.body.picture,
           req.body.description,
+          req.body.video,
         ]
       );
       res.status(201).json({
@@ -69,7 +70,7 @@ router.post("/api/albums/add", ensureAuthenticated, ensureRole(1), async (req, r
 router.put("/api/albums/:id", ensureAuthenticated, ensureRole(1), async (req, res) => {
     try {
         const results = await db.query(
-        "UPDATE albums SET title = $1, band = $2,  year = $3, genre = $4, picture = $5, description = $6 where id = $7 returning *",
+        "UPDATE albums SET title = $1, band = $2,  year = $3, genre = $4, picture = $5, description = $6, video = $7 where id = $8 returning *",
         [
             req.body.title,
             req.body.band,
@@ -77,6 +78,7 @@ router.put("/api/albums/:id", ensureAuthenticated, ensureRole(1), async (req, re
             req.body.genre,
             req.body.picture,
             req.body.description,
+            req.body.video,
             req.params.id,
         ]
         );

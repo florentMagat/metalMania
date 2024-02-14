@@ -16,6 +16,7 @@ const UpdatePage = (props) => {
   const [genre, setGenre] = useState("");
   const [picture, setPicture] = useState("");
   const [description, setDescription] = useState("");
+  const [video, setVideo] = useState("");
   const [file, setFile] = useState("");
 
   useEffect(()=> {
@@ -28,6 +29,7 @@ const UpdatePage = (props) => {
         setGenre(resp.genre)
         setPicture(resp.picture)
         setDescription(resp.description)
+        setVideo(resp.video)
     }
     fetchData()
   }, []);
@@ -38,15 +40,15 @@ const UpdatePage = (props) => {
   }, [file]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log("picture", picture)
+    e.preventDefault();
     await AlbumFinder.put(`/${id}`, {
       title,
       band,
       year,
       genre,
       picture,
-      description
+      description,
+      video
     })
     navigate('/');
     toast.success('Mise à jour effectuée !');
@@ -107,12 +109,15 @@ const UpdatePage = (props) => {
                     <div className='form-div'>
                         <textarea type = "text-area" style={{textAlign: "center", borderRadius: "10px"}} value={description} onChange={e => setDescription(e.target.value)} placeholder={description} />
                     </div>
-                    <button onClick={handleSubmit} style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px"}} type="submit">Modifier</button>
+                    <div className='form-div'>
+                        <input type = "text" style={{textAlign: "center", borderRadius: "10px", width: "100%"}} value={video} onChange={e => setVideo(e.target.value)} placeholder={video} />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "row", gap: "2vw", justifyContent: "center"}}>
+                        <button onClick={handleSubmit} type="submit" style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px", marginTop: "2vh"}}>Modifier</button>
+                        <button onClick={handleClick} style={{backgroundColor: "black", color: "white", border: "solid 1px white", padding: "1vh", borderRadius: "10px", marginTop: "2vh"}}>Retour à l'accueil</button>
+                    </div>
                 </div>
             </form>
-        </div>
-        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", paddingTop: "5vh", marginBottom:"3vh"}}>
-            <button onClick={handleClick} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Retour à l'accueil</button>
         </div>
     </>
     </div>

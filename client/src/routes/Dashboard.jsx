@@ -8,11 +8,11 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
+  let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
+  let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
+
   useEffect(()=> {
     // let token = localStorage.getItem('jwt');
-    let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
-    let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
-
     fetch("http://localhost:3001/users", {
       method: "GET",
       headers: {
@@ -45,7 +45,8 @@ const Dashboard = () => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
     fetch(`http://localhost:3001/users/${user.id}`, {
       method: "DELETE",
-      headers: {"content-type" : "application/json"},
+      headers: {"content-type" : "application/json",
+      authorization: `Bearer ${token}`,},
       body: JSON.stringify({id: user.id})})
       .then((res) => {
         if (!res.ok) {

@@ -12,7 +12,6 @@ router.post("/login", async (req, res) => {
         "SELECT * FROM users WHERE email = $1",
         [req.body.email]
       );
-  
       if (user.rows.length > 0) {
         const match = await bcrypt.compare(req.body.password, user.rows[0].password);
         if (match) {
@@ -21,7 +20,7 @@ router.post("/login", async (req, res) => {
           // const token = req.cookies.jwt;
           req.session.jwt = token;
           // req.cookies("jwt", token);
-          res.cookie('jwt', token, { httpOnly: true, sameSite: 'strict' });
+          res.cookie('jwt', token, { httpOnly: true });
           // console.log("req.session.jwt", req.session.jwt);
           res.status(200).json({
             token,
