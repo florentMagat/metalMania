@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import '../components/Album.css';
-import AlbumFinder from '../Apis/AlbumFinder';
+import getFindOneAlbum from '../Apis/FindOneAlbum';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import setUpdateAlbum from '../Apis/UpdateAlbum';
 
 const UpdatePage = (props) => {
 
@@ -21,7 +22,8 @@ const UpdatePage = (props) => {
 
   useEffect(()=> {
     const fetchData = async() => {
-      const res = await AlbumFinder.get(`/${id}`)
+      const api = getFindOneAlbum();
+      const res = await api.get(`/${id}`)
       const resp = res.data.data.album
         setTitle(resp.title)
         setBand(resp.band)
@@ -41,7 +43,8 @@ const UpdatePage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await AlbumFinder.put(`/${id}`, {
+    const api = getFindOneAlbum();
+    const res = await api.put(`/${id}`, {
       title,
       band,
       year,
@@ -60,11 +63,9 @@ const UpdatePage = (props) => {
 
   const upload = () => {
     const formData = new FormData()
-    console.log("file", file)
     formData.append('file', file)
     axios.post('http://localhost:3001/upload', formData)
       .then(res => {
-          console.log(res)
           axios.put('http://localhost:3001/updateImage', { imageUrl: res.data.pathname })
               .then(res => {
                   console.log(res)

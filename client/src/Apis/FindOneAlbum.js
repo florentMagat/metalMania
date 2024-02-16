@@ -1,15 +1,15 @@
 import axios from "axios";
-// let token = localStorage.getItem('jwt');
-let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
-let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
 
-console.log("token", token)
+export default function getFindOneAlbum() {
+    let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
+    let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
 
-export default axios.create({
-    baseURL: "http://localhost:3001/api/albums/",
-    method: "GET",
-    headers: {
-        "content-type" : "application/json",
-        authorization: `Bearer ${token}`,
-    } 
-});
+    return axios.create({
+        baseURL: "http://localhost:3001/albums",
+        method: "GET",
+        headers: {
+            "content-type" : "application/json",
+            authorization: `Bearer ${token}`,
+        } 
+    });
+}

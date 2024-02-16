@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Album from './Album';
-import AlbumFinder from "../Apis/AlbumFinder";
+import setDeleteAlbum from "../Apis/DeleteAlbum";
 import { useContext } from 'react';
 import { Albums } from '../Context/Albums';
 import "./Album.css";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { GenreContext } from '../routes/Home';
+import AlbumsFetch from '../Apis/AlbumsFetch';
 
 export default function AlbumsList() {
     const navigate = useNavigate();
@@ -21,20 +22,28 @@ export default function AlbumsList() {
     let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
     let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
 
-    useEffect(() => {       
-        async function fetchData() {
-            try {
-                const res = await AlbumFinder.get(`/`)
-                setAlbums(res.data.data.album)         
-            } catch (err) {}
-        } fetchData()
-    }, []); 
-        
+    useEffect(() => {   
+        if (token === null || token === undefined || token === "") {
+            return 
+        } else {
+            async function fetchData() {
+                try {
+                    const api =  AlbumsFetch();
+                    const res = await api.get();
+                    setAlbums(res.data.data.album)         
+                } catch (err) {
+                    console.log(err);
+                }
+            } fetchData()}
+    }, [token]);
+
     const handleDelete = async (id, picture) => {
         const formData = new FormData();
         formData.append('picture', picture);  
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cet album ?')) {
             try {
+                let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
+                let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
                 if (picture) {  
                 await axios.request({
                     method: 'delete',
@@ -46,7 +55,8 @@ export default function AlbumsList() {
                     },
                 });
                 }
-                await AlbumFinder.delete(`/${id}`);
+                const api = setDeleteAlbum();
+                await api.delete(`/${id}`);
                 setAlbums(albums.filter(album => {
                     return album.id !== id
                 }))
@@ -60,9 +70,9 @@ export default function AlbumsList() {
 
     const handleUpdate = (id) => {
         navigate(`/albums/${id}/update`)
-    }
+    };
 
-    if (email && role === "1") {
+    if (role == 1) {
         return (
             <div className='container'>
                 <input type="search" className='searchBar' placeholder="rechercher un album ou un groupe" onChange={(e)=>setSearch(e.target.value)}></input>
@@ -71,7 +81,7 @@ export default function AlbumsList() {
                         if (search.length > 0) {
                             if (album.title.toLowerCase().includes(search.toLowerCase()) || album.band.toLowerCase().includes(search.toLowerCase())){ 
                                 return(
-                                    <div className='album-presentation'>
+                                    <div key={album.id} className='album-presentation'>
                                         <Album key={album.id} { ...album }  />
                                         <div className='album-buttons'>
                                             <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
@@ -84,7 +94,7 @@ export default function AlbumsList() {
                         } else {
                             if (genre === album.genre) {
                                 return(
-                                    <div className='album-presentation'>
+                                    <div key={album.id} className='album-presentation'>
                                         <Album key={album.id} { ...album }  />
                                         <div className='album-buttons'>
                                             <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
@@ -94,7 +104,7 @@ export default function AlbumsList() {
                                 )
                             } else if (genre === "") {
                                 return(
-                                    <div className='album-presentation'>
+                                    <div key={album.id} className='album-presentation'>
                                         <Album key={album.id} { ...album }  />
                                         <div className='album-buttons'>
                                             <button onClick={()=> handleUpdate(album.id)} className="btn" style={{backgroundColor: "#F8C64B", color: "black"}}>Modifier</button>
@@ -116,7 +126,7 @@ export default function AlbumsList() {
                         if (search.length > 0) {
                             if (album.title.toLowerCase().includes(search.toLowerCase()) || album.band.toLowerCase().includes(search.toLowerCase())){ 
                                 return(
-                                    <div className='album-presentation'>
+                                    <div key={album.id} className='album-presentation'>
                                         <Album key={album.id} { ...album }  />
                                     </div>
                                 )} else {
@@ -125,13 +135,13 @@ export default function AlbumsList() {
                         } else {
                             if (genre === album.genre) {
                                 return(
-                                    <div className='album-presentation'>
+                                    <div key={album.id} className='album-presentation'>
                                         <Album key={album.id} { ...album }  />
                                     </div>
                                 )
                             } else if (genre === "") {
                                 return(
-                                    <div className='album-presentation'>
+                                    <div key={album.id} className='album-presentation'>
                                         <Album key={album.id} { ...album }  />
                                     </div>
                                 )}}

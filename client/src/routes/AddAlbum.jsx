@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AlbumFinder from '../Apis/AlbumFinder';
+import getAddNewAlbum from '../Apis/AddNewAlbum';
 import "../components/Album.css";
 import { Albums } from '../Context/Albums';
 import axios from 'axios';
@@ -30,7 +30,8 @@ export default function AddAlbum() {
         }
     }
     try {
-        const res = await AlbumFinder.post("/add", {
+        const AddNewAlbum = getAddNewAlbum(); // Obtenez l'instance d'axios
+        const res = await AddNewAlbum.post("/add", {
             title,
             band,
             year,
@@ -38,7 +39,7 @@ export default function AddAlbum() {
             picture,
             description,
             video
-        })      
+        })       
         toast.success('Nouvel album ajouté avec succès !');
         navigate('/');
         addAlbums(res.data.data.album);

@@ -36,6 +36,24 @@ router.post("/register", async (req, res) => {
       console.log(err);
     }
 });
+
+// Consultation du profil d'un utilisateur
+  
+router.get("/users/:id", ensureAuthenticated, ensureRole(2), async (req, res) => {
+  try {
+      const users = await db.query("SELECT * FROM users WHERE id=$1", [
+        req.params.id,
+        ]);
+        res.status(200).json({
+        status: "success",
+        data: {
+            user: users.rows[0],
+        },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
   
 // Consultation de la liste des utilisateurs
   
@@ -51,6 +69,38 @@ router.get("/users", ensureAuthenticated, ensureRole(1), async (req, res) => {
     } catch (err) {
         console.log(err);
     }
+});
+
+// Enregistrement d'un utilisateur
+
+router.put("/update/:id", ensureAuthenticated, ensureRole(1,2), async (req, res) => {
+  try {
+    const { error, value } = registerSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+    // hashage du mot de passe avant de l'enregistrer dans la BDD
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const results = await db.query(
+      "UPDATE users SET (lastname, firstname, email, password, role_id) values ($1, $2, $3, $4, $5) returning *",
+      [
+        req.body.lastname,
+        req.body.firstname,
+        req.body.email,
+        hashedPassword,
+        req.body.role_id,
+      ]
+    );
+    res.status(200).json({
+    statuts: "succes",
+    data: {
+        album: results.rows[0],
+    },
+    });
+} catch (err) {
+    console.log(err);
+}
 });
   
 // Suppression d'un utilisateur

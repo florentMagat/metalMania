@@ -19,7 +19,9 @@ function ensureAuthenticated(req, res, next) {
 }
   
 function ensureRole(role_id) {
-    return function(req, res, next) {
+  
+    return function(req, res, next) 
+    {console.log("req.user", req.user)
         if (!req.user || req.user.userId !== role_id) {
         return res.sendStatus(403);
         }

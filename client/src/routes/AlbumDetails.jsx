@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import 'iconify-icon';
 import './AlbumDetails.css';
-import FindOneAlbum from '../Apis/FindOneAlbum';
+import AlbumsFetch from '../Apis/AlbumsFetch';
 import FindOneReview from '../Apis/FindOneReview';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -16,9 +16,12 @@ const AlbumDetails = () => {
   useEffect(() => {       
     async function fetchData() {
         try {
-            const res = await FindOneAlbum.get(`/${id.id}`);
+            const api = AlbumsFetch();
+            const res = await api.get(`/${id.id}`);           
             setAlbum(res.data.data.album) 
-            const review = await FindOneReview.get(`/${id.id}`);
+
+            const reviewApi = FindOneReview();
+            const review = await reviewApi.get(`/${id.id}`);
             setReview(review.data.data.review);
         } catch (err) {}
     } fetchData()
@@ -39,9 +42,9 @@ const AlbumDetails = () => {
           height="315" 
           src={album.video} 
           title="YouTube video player" 
-          frameborder="0" 
+          frameBorder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          allowfullscreen>
+          allowFullScreen>
         </iframe>
         <div style={{display: "flex", flexDirection: "row", gap: "2vh", alignItems: "baseline"}}> 
           <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "baseline", gap: "0.5vw"}}>

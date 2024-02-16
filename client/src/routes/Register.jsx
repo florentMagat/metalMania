@@ -76,7 +76,7 @@ export default function Register() {
             <div className="col-md-12 mb-3">
               <div className="form-outline">
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                  <label className="form-label" for="form3Example2">First Name</label>
+                  <label className="form-label" htmlFor="form3Example2">First Name</label>
                 </div>
                 <input style={{textAlign: "center"}} type="text" name="Firstname" id="form3Example2" className="form-control" value={firstname} onChange={e=>setFirstname(e.target.value)} /> 
               </div>
@@ -85,21 +85,21 @@ export default function Register() {
 
           <div className="form-outline mb-3">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-              <label className="form-label" for="form3Example5">Last Name</label>
+              <label className="form-label" htmlFor="form3Example5">Last Name</label>
             </div>
             <input style={{textAlign: "center"}} type="text" name="Lastname" id="form3Example5" className="form-control" value={lastname} onChange={e=>setLastname(e.target.value)}  /> 
           </div>
 
           <div className="form-outline mb-3">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-              <label className="form-label" for="form3Example3">Email address</label>
+              <label className="form-label" htmlFor="form3Example3">Email address</label>
             </div>
             <input style={{textAlign: "center"}} type="email" name="email" id="form3Example3" className="form-control" value={email} onChange={e=>setEmail(e.target.value)}  />  
           </div>
 
           <div className="form-outline mb-3">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-              <label className="form-label" for="form3Example4">Password</label>
+              <label className="form-label" htmlFor="form3Example4">Password</label>
             </div>
             <input style={{textAlign: "center"}} type="password" name="password" id="form3Example4" className="form-control" value={password} onChange={e=>setPassword(e.target.value)}  />
           </div>

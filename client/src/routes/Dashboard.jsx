@@ -41,7 +41,6 @@ const Dashboard = () => {
   }
 
   const handleDelete = (user) => {
-    console.log("user.id", user.id)
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
     fetch(`http://localhost:3001/users/${user.id}`, {
       method: "DELETE",
@@ -55,7 +54,6 @@ const Dashboard = () => {
         return res.text().then(text => text ? JSON.parse(text) : {})
       })
       .then((data) => {
-        console.log("data", data)
         if (data.status === "success") {
           toast.success('Utilisateur supprimé !');
           setUsers(users.filter(selectedUser => {

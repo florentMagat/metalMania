@@ -44,12 +44,10 @@ export default function Login() {
 
       }).then((res)=>{
         res.json().then((data) => {
-          // toast.success('Login réussi');
           setIsLogged(true);
           document.cookie = `jwt=${data.token}`;
-          // res.cookie("jwt", data.token, {httpOnly: true, sameSite: true, maxAge: 3600000, secure: true});
-          // localStorage.setItem('jwt', data.token);
-          sessionStorage.setItem('email', email);
+          sessionStorage.setItem('id', data.data.user.id);
+          sessionStorage.setItem('email', data.data.user.email);
           sessionStorage.setItem('role', data.data.role);
           navigate("/");
       })}).catch((err)=>{
@@ -71,7 +69,7 @@ export default function Login() {
           <img src={home} className="login-img" alt="logo-MetalMania" style={{borderRadius: "35px", height: "30vh", width: "auto"}} onClick={()=>navigate(`/`)}/>
           <div className="form-outline mt-4 mb-4">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-              <label className="form-label" for="form3Example3">Email</label>
+              <label className="form-label" htmlFor="form3Example3">Email</label>
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <input type="email" style={{width: '25vw', textAlign: "center"}} value={email} onChange={e=>emailupdate(e.target.value)} id="form3Example3" className="form-control" /> 
@@ -80,7 +78,7 @@ export default function Login() {
 
           <div className="form-outline mb-4">
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-              <label className="form-label" for="form3Example4">Password</label>
+              <label className="form-label" htmlFor="form3Example4">Password</label>
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
               <input type="password" style={{width: '25vw', textAlign: "center"}} value={password} onChange={e=>passwordupdate(e.target.value)} id="form3Example4" className="form-control" />  
