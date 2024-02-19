@@ -84,6 +84,9 @@ export default function Login() {
               <input type="password" style={{width: '25vw', textAlign: "center"}} value={password} onChange={e=>passwordupdate(e.target.value)} id="form3Example4" className="form-control" />  
             </div>
           </div>
+          <div style={{display: "flex", flexDirection: "row", justifyContent: "center", fontStyle: "italic"}}>
+            <p style={{cursor: "pointer"}}>Mot de passe égaré ?</p>
+          </div>
 
           <div className="login-buttons">
             <button type="submit" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Se connecter</button>

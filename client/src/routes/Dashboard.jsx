@@ -64,7 +64,6 @@ const Dashboard = () => {
         toast.error('Erreur lors de la suppression de l\'utilisateur');
         console.error('Erreur lors de la conversion de la réponse en JSON', err);
       })
-      
     }
   }
 
@@ -91,7 +90,7 @@ const Dashboard = () => {
                         <td>{user.email}</td>
                         <td>{user.role_id === 1 ? "administrateur" : "utilisateur"}</td>
                         {/* <td><iconify-icon icon="tabler:dots"></iconify-icon></td> */}
-                        {user.role_id === 2 ? <td onClick={()=> handleDelete(user)}><iconify-icon icon="emojione-v1:cross-mark"></iconify-icon></td> : <td></td>}
+                        {user.role_id === 2 ? <td onClick={()=> handleDelete(user)}><iconify-icon icon="emojione-v1:cross-mark" width="1.3em" height="1.3em"></iconify-icon></td> : <td></td>}
                     </tr>
                 ))}
               </tbody>

@@ -18,15 +18,14 @@ function ensureAuthenticated(req, res, next) {
     });
 }
   
-function ensureRole(role_id) {
-  
-    return function(req, res, next) 
-    {console.log("req.user", req.user)
-        if (!req.user || req.user.userId !== role_id) {
-        return res.sendStatus(403);
-        }
-        next();
-    }
+function ensureRole(...role_ids) {
+  return function(req, res, next) {
+      console.log("req.user", req.user)
+      if (!req.user || !role_ids.includes(req.user.userId)) {
+          return res.sendStatus(403);
+      }
+      next();
+  }
 }
 
 module.exports = { ensureAuthenticated, ensureRole };
