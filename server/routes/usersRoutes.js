@@ -75,17 +75,16 @@ router.get("/users", ensureAuthenticated, ensureRole(1), async (req, res) => {
 
 router.put("/update/:id", ensureAuthenticated, ensureRole(1,2), async (req, res) => {
   try {
-    // const { error, value } = registerSchema.validate(req.body);
-    // if (error) {
-    //   return res.status(400).send(error.details[0].message);
-    // }
+    // hashage du mot de passe avant de l'enregistrer dans la BDD
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const results = await db.query(
-      "UPDATE users SET lastname = $1, firstname = $2, email = $3 WHERE id = $4 RETURNING *",
+      "UPDATE users SET lastname = $1, firstname = $2, email = $3, password = $4 WHERE id = $5 RETURNING *",
       [
         req.body.lastname,
         req.body.firstname,
         req.body.email,
+        hashedPassword,
         req.params.id,
       ]
     );

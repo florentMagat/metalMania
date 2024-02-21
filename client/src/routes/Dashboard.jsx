@@ -67,6 +67,8 @@ const Dashboard = () => {
     }
   }
 
+  console.log("users", users)
+
   return (
     <div className='background'>
         <div className='dashboard'>

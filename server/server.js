@@ -50,7 +50,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use([usersRoutes, albumsRoutes, imagesRoutes, reviewsRoutes, authentificationsRoutes]);
 
 // Gestion des erreurs 404
-
 app.use((req, res, next) => {
   res.status(404).send("Navré, cette page n'existe pas.");
 });

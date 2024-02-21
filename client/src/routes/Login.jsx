@@ -43,6 +43,9 @@ export default function Login() {
         body:JSON.stringify(informations)
 
       }).then((res)=>{
+        if (res.status === 401) {
+          toast.error('Email ou mot de passe incorrect')
+        } else {
         res.json().then((data) => {
           setIsLogged(true);
           document.cookie = `jwt=${data.token}`;
@@ -50,7 +53,7 @@ export default function Login() {
           sessionStorage.setItem('email', data.data.user.email);
           sessionStorage.setItem('role', data.data.role);
           navigate("/");
-      })}).catch((err)=>{
+      })}}).catch((err)=>{
         toast.error('erreur')
       });
     }
