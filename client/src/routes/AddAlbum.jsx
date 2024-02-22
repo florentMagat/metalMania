@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 export default function AddAlbum() {
 
   const navigate = useNavigate();
+  let jwtCookie = document.cookie.split(";").find(row => row.startsWith('jwt='));
+  let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
 
   const { addAlbums } = useContext(Albums)
   const [title, setTitle] = useState("");
@@ -57,7 +59,13 @@ export default function AddAlbum() {
     console.log("file", file)
     const formData = new FormData()
     formData.append('file', file)
-    axios.post('http://localhost:3001/upload', formData)
+    axios.post('http://localhost:3001/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    
+    })
         .then(res => {
             console.log(res.data.data.filename)
             toast.success("Ajout d'une image réussi !");
