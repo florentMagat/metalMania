@@ -12,7 +12,6 @@ const Dashboard = () => {
   let token = jwtCookie ? jwtCookie.split('=')[1] : undefined;
 
   useEffect(()=> {
-    // let token = localStorage.getItem('jwt');
     fetch("http://localhost:3001/users", {
       method: "GET",
       headers: {

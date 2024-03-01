@@ -15,7 +15,6 @@ export default function AlbumsList() {
     const [search, setSearch] = useState("");
     const { albums, setAlbums } = useContext(Albums);
     const { genre } = useContext(GenreContext);
-    let email = sessionStorage.getItem('email');
     let role = sessionStorage.getItem('role');
 
     // let token = localStorage.getItem('jwt');
@@ -35,7 +34,7 @@ export default function AlbumsList() {
                     console.log(err);
                 }
             } fetchData()}
-    }, [token]);
+    }, [token, setAlbums]);
 
     const handleDelete = async (id, picture) => {
         const formData = new FormData();
@@ -72,7 +71,7 @@ export default function AlbumsList() {
         navigate(`/albums/${id}/update`)
     };
 
-    if (role == 1) {
+    if (role === "1") {
         return (
             <div className='container'>
                 <input type="search" className='searchBar' placeholder="rechercher un album ou un groupe" onChange={(e)=>setSearch(e.target.value)}></input>
