@@ -23,11 +23,11 @@ const Favorites = () => {
     } else {
       async function fetchData() {
         try {
-            const api =  AlbumsFetch();
-            const res = await api.get();
-            setAlbums(res.data.data.album)         
+          const api =  AlbumsFetch();
+          const res = await api.get();
+          setAlbums(res.data.data.album)         
         } catch (err) {
-            console.log(err);
+          console.log(err);
         }
     } fetchData()}
   }, [token]);

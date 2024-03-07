@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import 'iconify-icon';
 import './AlbumDetails.css';
 import AlbumsFetch from '../Apis/AlbumsFetch';
 import FindOneReview from '../Apis/FindOneReview';
 import getAddFavorite from '../Apis/AddFavorite';
 import getDeleteFavorite from '../Apis/DeleteFavorite';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import getFetchFavorites from '../Apis/FetchFavorites';
 
 const AlbumDetails = () => {
 
   const [album, setAlbum] = useState("");
   const [review, setReview] = useState("");
   const [favorite, setFavorite] = useState(false);
+  const [favoritesAlbums, setFavoritesAlbums] = useState([]);
+
   const navigate = useNavigate();
   const id = useParams();
   const userId = sessionStorage.getItem('id');
@@ -60,8 +63,30 @@ const AlbumDetails = () => {
     setFavorite(!favorite);
   }
 
-  console.log("albumId", id.id);
-  console.log("userId", userId);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const api = getFetchFavorites();
+        const res = await api.get(`/${userId}`);
+        console.log("res", res)
+        setFavoritesAlbums(res.data.data.favorites);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, [userId, favorite]);
+
+  useEffect(() => {
+    if (favoritesAlbums.some(favoriteAlbum => favoriteAlbum.album_id === album.id)) {
+      setFavorite(true);
+    }
+    else {
+      setFavorite(false);
+    }}
+  , [favoritesAlbums]);
+
+  console.log("favoritesAlbums", favoritesAlbums);
   console.log("favorite", favorite);
 
   return (
@@ -85,7 +110,7 @@ const AlbumDetails = () => {
             </div> 
             <button className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Noter</button>
           </div>
-          {favorite ? 
+          {favoritesAlbums.some(favoriteAlbum => favoriteAlbum.album_id === album.id) ? 
             <button className="btn" style={{backgroundColor: "black", color: "red", border: "solid 1px white"}} onClick={addFavorite}>
               Retirer des favoris
             </button> :
@@ -93,8 +118,7 @@ const AlbumDetails = () => {
               Ajouter aux favoris
             </button>
           }
-        </div>
-        
+        </div>      
       </div>
       <div className='album-details-right'>
         <div className='title'>
