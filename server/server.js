@@ -13,6 +13,7 @@ const rateLimit = require("express-rate-limit");
 const usersRoutes = require('./routes/usersRoutes');
 const albumsRoutes = require('./routes/albumsRoutes');
 const imagesRoutes = require('./routes/imagesRoutes');
+const favoritesRoutes = require('./routes/favoritesRoutes');
 const reviewsRoutes = require('./routes/reviewsRoutes');
 const authentificationsRoutes = require('./routes/authentificationsRoutes');
 
@@ -47,7 +48,7 @@ app.use(limiter);
 app.use(morgan("dev"));
 app.use("/images", express.static("images"));
 app.use(express.urlencoded({ extended: false }));
-app.use([usersRoutes, albumsRoutes, imagesRoutes, reviewsRoutes, authentificationsRoutes]);
+app.use([usersRoutes, albumsRoutes, imagesRoutes, favoritesRoutes, reviewsRoutes, authentificationsRoutes]);
 
 // Gestion des erreurs 404
 app.use((req, res, next) => {

@@ -12,6 +12,10 @@ export default function Header() {
   const handleAdding = () => {
     navigate('/albums/add')
   }
+
+  const handleFavorites = () => {
+    navigate("/favorites")
+  }
   
   const handleSubmit = () => {
     navigate("/login")
@@ -62,13 +66,15 @@ export default function Header() {
               <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}
                 onClick={()=> setGenre("Autres")}>
                   Autres
-              </button>     
-              <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} onClick={handleAdding}>Ajouter un nouvel album</button>   
-            </div>
-    
+              </button>   
+              <div className='header-connection'> 
+                <button type="button" className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} onClick={handleAdding}>Ajouter un album</button>  
+                <button type="button" className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} onClick={handleFavorites}>Mes favoris</button>  
+              </div> 
+            </div> 
             <div className='header-connection'>
-              <button onClick={handleSubmit} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Se déconnecter</button>   
-              <button onClick={handleDashboard} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Dashboard</button>
+              <button onClick={handleSubmit} className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} >Se déconnecter</button>   
+              <button onClick={handleDashboard} className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} >Dashboard</button>
             </div>
           </div>
         </div> 
@@ -109,12 +115,13 @@ export default function Header() {
               <button type="button" className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}
                 onClick={()=> setGenre("Autres")}>
                   Autres
-              </button>       
+              </button> 
+              <button type="button" className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} onClick={handleFavorites}>Mes favoris</button>        
             </div>
     
             <div className='header-connection'>
-              <button onClick={handleSubmit} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Se déconnecter</button>  
-              <button onClick={handleUserDashboard} className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}} >Mon Compte</button> 
+              <button onClick={handleSubmit} className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} >Se déconnecter</button>  
+              <button onClick={handleUserDashboard} className="btn" style={{whiteSpace: "nowrap", backgroundColor: "black", color: "white", border: "solid 1px white"}} >Mon Compte</button> 
             </div>
           </div>
         </div> 

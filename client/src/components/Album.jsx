@@ -16,7 +16,7 @@ export default function Album( props ) {
       <img crossOrigin='anonymous' src={picture} alt="album_cover" className='image'/>
       </div>
       <div className='album-title'>
-        <h3 className='title'>"{props.title}"</h3>
+        <h3 className='title'>"{props.title.substring(0,15)}"</h3>
         <h4>{props.band}</h4>
       </div>
     </div>

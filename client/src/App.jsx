@@ -8,6 +8,7 @@ import UserDashboard from './routes/UserDashboard';
 import Login from './routes/Login';
 import AddAlbum from './routes/AddAlbum';
 import Register from './routes/Register';
+import Favorites from './routes/Favorites';
 import Page404 from './routes/Page404';
 import { AlbumsProvider } from './Context/Albums';
 import { ToastContainer } from 'react-toastify';
@@ -22,6 +23,7 @@ const App = () => {
           <Route exact path = "/login" element = { <Login/> } />
           <Route exact path = "/dashboard" element = { <Dashboard/> } />
           <Route exact path = "/user/dashboard" element = { <UserDashboard/> } />
+          <Route exact path = "/favorites" element = { <Favorites/> } />
           <Route exact path = "/albums/:id" element = { <AlbumDetails/> } />
           <Route exact path = "/albums/add" element = { <AddAlbum/> } />
           <Route exact path = "/register" element = { <Register/> } />

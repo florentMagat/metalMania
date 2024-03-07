@@ -50,6 +50,7 @@
     border-radius: 30px;
     margin-left: 2vw;
     margin-right: 2vw;
+    cursor: pointer;
 }
 
 .album-title{
@@ -66,6 +67,7 @@
 
 .title{
     font-style: italic;
+    overflow: hidden;
 }
 
 .form-title{
