@@ -1,4 +1,4 @@
-.background-favorites{
+.favorites-background{
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -27,20 +27,6 @@
     margin-bottom: 5vh;
 }
 
-.favorites-background{
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    background: url("../assets/OIG.Mic0UZn03bxy_b_F.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-}
-
 .slider-container{
     display: flex;
     justify-content: center;
@@ -49,7 +35,7 @@
     width: 40vw;
     margin-top: 5vh;
     margin-bottom: 5vh;
-    padding: 5vh;
+    padding: 5vw;
 }
 
 .slide{

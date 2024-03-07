@@ -71,6 +71,8 @@ export default function AlbumsList() {
         navigate(`/albums/${id}/update`)
     };
 
+    console.log("albums", albums)
+
     if (role === "1") {
         return (
             <div className='container'>

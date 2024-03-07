@@ -11,7 +11,7 @@ export default function Album( props ) {
 
   return (
     <>
-    <div>
+    <div style={{display: "flex", flexDirection: "column", justifyContent: "content", alignItems: "center"}}>
       <div className="album-details" onClick={ () => handleDetails(props.id) }>
       <img crossOrigin='anonymous' src={picture} alt="album_cover" className='image'/>
       </div>
