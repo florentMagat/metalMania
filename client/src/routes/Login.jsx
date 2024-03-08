@@ -88,7 +88,10 @@ export default function Login() {
             </div>
           </div>
           <div style={{display: "flex", flexDirection: "row", justifyContent: "center", fontStyle: "italic"}}>
-            <p style={{cursor: "pointer"}}>Mot de passe égaré ?</p>
+            <a style={{cursor: "pointer"}} 
+                href="mailto:administrateur@mail.com?subject=Mot de passe égaré&body=Bonjour, j'ai perdu mon mot de passe et j'ai besoin d'aide pour le réinitialiser. Mon adresse mail ayant servi pour mon inscription est : ">
+                Mot de passe égaré
+            </a>
           </div>
 
           <div className="login-buttons">
