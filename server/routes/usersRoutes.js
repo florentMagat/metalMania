@@ -130,6 +130,7 @@ router.put("/albums/:id", ensureAuthenticated, ensureRole(1), async (req, res) =
 
 router.delete("/users/:id", ensureAuthenticated, ensureRole(1,2), async (req, res) => {
   try {
+    await db.query('DELETE FROM favorites WHERE user_id = $1', [req.params.id]);
     await db.query("DELETE FROM users where id = $1", [req.params.id]);
     res.status(200).json({
     status: "success",

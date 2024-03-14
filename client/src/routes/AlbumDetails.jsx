@@ -12,7 +12,7 @@ import getFetchFavorites from '../Apis/FetchFavorites';
 const AlbumDetails = () => {
 
   const [album, setAlbum] = useState("");
-  const [review, setReview] = useState("");
+  // const [review, setReview] = useState("");
   const [favorite, setFavorite] = useState(false);
   const [favoritesAlbums, setFavoritesAlbums] = useState([]);
 
@@ -28,9 +28,9 @@ const AlbumDetails = () => {
             const res = await api.get(`/${id.id}`);           
             setAlbum(res.data.data.album) 
 
-            const reviewApi = FindOneReview();
-            const review = await reviewApi.get(`/${id.id}`);
-            setReview(review.data.data.review);
+            // const reviewApi = FindOneReview();
+            // const review = await reviewApi.get(`/${id.id}`);
+            // setReview(review.data.data.review);
         } catch (err) {}
     } fetchData()
     }, [id.id]); 
@@ -103,13 +103,13 @@ const AlbumDetails = () => {
           allowFullScreen>
         </iframe>
         <div>
-          <div style={{display: "flex", flexDirection: "row", gap: "2vh", alignItems: "baseline", marginBottom: "5vh"}}> 
+          {/* <div style={{display: "flex", flexDirection: "row", gap: "2vh", alignItems: "baseline", marginBottom: "5vh"}}> 
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "baseline", gap: "0.5vw"}}>
               {review ? {review} + " / 10" : "- / 10"} 
               <iconify-icon icon="fluent-emoji-flat:star"></iconify-icon>
             </div> 
             <button className="btn" style={{backgroundColor: "black", color: "white", border: "solid 1px white"}}>Noter</button>
-          </div>
+          </div> */}
           {favoritesAlbums.some(favoriteAlbum => favoriteAlbum.album_id === album.id) ? 
             <button className="btn" style={{backgroundColor: "black", color: "red", border: "solid 1px white"}} onClick={addFavorite}>
               Retirer des favoris
