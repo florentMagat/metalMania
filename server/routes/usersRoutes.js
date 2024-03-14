@@ -126,7 +126,7 @@ router.put("/albums/:id", ensureAuthenticated, ensureRole(1), async (req, res) =
   }
 });
   
-// Suppression d'un utilisateur
+// Suppression d'un utilisateur & des ses favoris
 
 router.delete("/users/:id", ensureAuthenticated, ensureRole(1,2), async (req, res) => {
   try {
